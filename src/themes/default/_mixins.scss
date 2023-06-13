@@ -1,0 +1,79 @@
+@use 'sass:math';
+
+@function isMultiple10($i) {
+  @return ($i % 10 == 0);
+}
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
+}
+
+@mixin defineColorHSL($name, $hue, $saturation, $lightness, $alpha) {
+  #{$name}: unquote('hsla(#{$hue}, #{$saturation}, #{$lightness}, #{$alpha}%)');
+}
+@mixin defineAlphas($name, $mixcolor) {
+  @for $i from 10 through 90 {
+    @if (isMultiple10($i)) {
+      @include defineColorHSL(
+        #{$name}-alpha#{$i},
+        #{math.div(math.round(hue($mixcolor) * 100), 100)},
+        #{math.div(math.round(saturation($mixcolor) * 100), 100)},
+        #{math.div(math.round(lightness($mixcolor) * 100), 100)},
+        #{$i}
+      );
+    }
+  }
+}
+
+@mixin defineLightness($name, $mixcolor) {
+  $light: math.div(100% - lightness($mixcolor), 5);
+  $dark: math.div(lightness($mixcolor), 5);
+  @for $i from 1 through 4 {
+    @if ($dark * $i > 0%) {
+      @include defineColorHSL(
+        #{$name}-#{(10 - $i) * 100},
+        #{math.div(math.round(hue($mixcolor) * 100), 100)},
+        #{math.div(math.round(saturation($mixcolor) * 100), 100)},
+        #{math.div(math.round($dark * $i * 100), 100)},
+        100
+      );
+    }
+  }
+  @include defineColorHSL(
+    #{$name}-500,
+    #{math.div(math.round(hue($mixcolor) * 100), 100)},
+    #{math.div(math.round(saturation($mixcolor) * 100), 100)},
+    #{math.div(math.round(lightness($mixcolor) * 100), 100)},
+    100
+  );
+  @for $i from 1 through 4 {
+    @if (($light * $i) + lightness($mixcolor) <100%) {
+      @include defineColorHSL(
+        #{$name}-#{(10 - ($i + 5)) * 100},
+        #{math.div(math.round(hue($mixcolor) * 100), 100)},
+        #{math.div(math.round(saturation($mixcolor) * 100), 100)},
+        #{math.div(
+            math.round((($light * $i) + lightness($mixcolor)) * 100),
+            100
+          )},
+        100
+      );
+    }
+  }
+}
+
+@mixin create-color-variants($name, $mixcolor) {
+  @include defineAlphas($name, $mixcolor);
+  @include defineLightness($name, $mixcolor);
+}

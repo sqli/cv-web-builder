@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import Image from './Image.vue'
+
 defineProps<{
   msg: string
 }>()
+
 </script>
 
 <template>
@@ -13,6 +16,7 @@ defineProps<{
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
       What's next?
     </h3>
+    <Image />
   </div>
 </template>
 
@@ -34,6 +38,7 @@ h3 {
 }
 
 @media (min-width: 1024px) {
+
   .greetings h1,
   .greetings h3 {
     text-align: left;

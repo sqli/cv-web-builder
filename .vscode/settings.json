@@ -1,38 +1,24 @@
 {
+  // Set the default
 
-    // Set the default
-  
-    "editor.formatOnSave": true,
-  
-    "json.format.enable": true,
-  
-  
-  
-  
-    // Enable per-language
-  
-    "[javascript]": {
-  
-      "editor.formatOnSave": true
-  
-    },
-  
-    "[vue]": {
-  
-      "editor.formatOnSave": true
-  
-    },
-  
-    "[css]": {
-  
-      "editor.formatOnSave": true
-  
-    },
-  
-    "[scss]": {
-  
-      "editor.formatOnSave": true
-  
-    }
-  
+  "editor.formatOnSave": true,
+  "json.format.enable": true,
+
+  // Enable per-language
+
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+
+  "[vue]": {
+    "editor.formatOnSave": true
+  },
+
+  "[css]": {
+    "editor.formatOnSave": true
+  },
+
+  "[scss]": {
+    "editor.formatOnSave": true
   }
+}

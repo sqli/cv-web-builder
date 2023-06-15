@@ -98,6 +98,7 @@ main {
       linear-gradient(-45deg, transparent 75%, var(--color-chess) 75%);
     background-size: 20px 20px;
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-repeat: repeat;
     .color {
       border-bottom: 1px solid var(--color-grey-500);
       border-top: 1px solid var(--color-grey-500);

@@ -13,6 +13,7 @@
   ],
   "include": ["src"],
   "compilerOptions": {
-    "types": ["element-plus/global"]
+    "types": ["element-plus/global"],
+    "lib": ["ES6", "DOM"]
   }
 }

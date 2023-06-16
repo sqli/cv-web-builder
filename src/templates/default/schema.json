@@ -1,0 +1,46 @@
+{
+  "title": "CV Data form",
+  "description": "Please add your data",
+  "type": "object",
+  "required": ["firstName", "lastName"],
+  "ui:order": ["firstName", "LastName", "*", "password"],
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "title": "First name",
+      "default": ""
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Last name",
+      "ui:options": {
+        "description": "Add all your last name"
+      },
+      "err:required": "Last Name required"
+    },
+    "bio": {
+      "type": "string",
+      "title": "Bio",
+      "minLength": 10
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "minLength": 3
+    },
+    "telephone": {
+      "type": "string",
+      "title": "Telephone",
+      "minLength": 10
+    },
+    "technicalKnowledge": {
+      "type": "array",
+      "title": "Technical Knowledge",
+      "items": {
+        "title": "Knowledge",
+        "type": "string",
+        "default": ""
+      }
+    }
+  }
+}

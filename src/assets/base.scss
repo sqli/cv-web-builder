@@ -14,3 +14,16 @@ body {
   padding: 0 24px 24px 24px;
   box-sizing: content-box;
 }
+
+.genFormBtn {
+  display: inline-flex !important;
+  justify-content: center;
+}
+
+svg {
+  path {
+    fill: currentColor;
+    color: var(--color);
+    --color: inherit;
+  }
+}

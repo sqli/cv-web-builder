@@ -27,3 +27,15 @@ svg {
     --color: inherit;
   }
 }
+
+.form-drawer.open {
+  min-width: 100%;
+  max-width: 100%;
+
+  @include tablet {
+    min-width: 50%;
+  }
+  @include desktop {
+    min-width: 500px;
+  }
+}

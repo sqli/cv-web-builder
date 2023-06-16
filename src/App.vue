@@ -71,7 +71,12 @@ const handleCommand = (command: string) => {
     </div>
   </el-affix>
 
-  <el-drawer v-model="drawer" direction="rtl" :before-close="handleClose">
+  <el-drawer
+    v-model="drawer"
+    direction="rtl"
+    :before-close="handleClose"
+    class="form-drawer"
+  >
     <form-schema></form-schema>
   </el-drawer>
   <main><RouterView /></main>

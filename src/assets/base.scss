@@ -1,5 +1,5 @@
 body {
-  font-family: --el-font-family;
+  font-family: var(--el-font-family);
   font-weight: 400;
   font-size: var(--el-font-size-base);
   color: var(--el-text-color-primary);

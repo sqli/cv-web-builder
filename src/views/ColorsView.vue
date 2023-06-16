@@ -63,10 +63,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  font-family: var(--font-family);
-}
-
 h2 {
   font-size: 2em;
   margin-top: 2em;

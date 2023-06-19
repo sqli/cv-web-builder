@@ -16,7 +16,7 @@ store.updateData({
   firstName: 'Perico',
   lastName: 'Palotes',
   age: 80,
-  email: 'perica@palota.com',
+  email: 'perico@palote.com',
   telephone: '669696969',
 })
 
@@ -40,8 +40,8 @@ const handleCommand = (command: string) => {
 </script>
 
 <template>
-  <el-affix :offset="0">
-    <div class="el-page-header__header top-menu">
+  <el-affix :offset="0" class="top-menu">
+    <div class="el-page-header__header">
       <div class="el-page-header__left">
         <div class="el-page-header__content">
           <div class="flex items-center">
@@ -85,8 +85,9 @@ const handleCommand = (command: string) => {
 <style lang="scss" scoped>
 .top-menu {
   background-color: white;
-  padding: 24px 0;
+  padding: 24px;
   border-bottom: 1px solid var(--el-menu-border-color);
+  margin: 0 auto;
   .el-dropdown + .el-dropdown {
     margin-left: 12px;
   }

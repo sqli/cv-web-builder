@@ -1,0 +1,83 @@
+.page {
+  margin: 1cm auto;
+  background: #fff;
+  box-shadow: 0 4px 5px rgba(75, 75, 75, 0.2);
+  outline: 0;
+  position: relative;
+  /*A4 size css*/
+  width: 21cm;
+  min-height: 29.7cm;
+  padding-left: 2cm;
+  padding-top: 2cm;
+  padding-right: 2cm;
+  padding-bottom: 2cm;
+}
+div.page-break {
+  page-break-after: always;
+}
+@media screen {
+  div.page-break::before {
+    content: '';
+    display: block;
+    height: 0.8cm;
+    margin-left: 0.5cm;
+    margin-right: 0.5cm;
+    background-color: #fff;
+    box-shadow: 0 6px 5px rgba(75, 75, 75, 0.2);
+  }
+  div.page-break {
+    display: block;
+    height: 1.8cm;
+    margin-left: -2.5cm;
+    margin-right: -2.5cm;
+    margin-top: 1.2cm;
+    margin-bottom: 2cm;
+    background: #eee;
+  }
+}
+h1 {
+  page-break-before: always;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  page-break-after: avoid;
+}
+p {
+  margin: 0;
+}
+p + p {
+  margin-top: 0.5cm;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+table {
+  page-break-inside: avoid;
+}
+@page {
+  orphans: 4;
+  widows: 2;
+  size: A4 portrait;
+  margin-left: 2cm;
+  margin-top: 2cm;
+  margin-right: 2cm;
+  margin-bottom: 2cm;
+}
+@media print {
+  .page {
+    width: initial !important;
+    min-height: initial !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: initial !important;
+    border-radius: initial !important;
+    background: initial !important;
+    box-shadow: initial !important;
+    page-break-after: always;
+  }
+}

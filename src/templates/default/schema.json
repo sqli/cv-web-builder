@@ -24,9 +24,9 @@
       "minLength": 10
     },
     "password": {
+      "title": "A string value",
       "type": "string",
-      "title": "Password",
-      "minLength": 3
+      "default": "lorem ipsum"
     },
     "telephone": {
       "type": "string",
@@ -40,6 +40,19 @@
         "title": "Knowledge",
         "type": "string",
         "default": ""
+      }
+    },
+    "aboutYou": {
+      "type": "object",
+      "title": "About you",
+      "properties": {
+        "textarea": {
+          "type": "string",
+          "title": "this textarea will support markdown",
+          "ui:options": {
+            "type": "textarea"
+          }
+        }
       }
     }
   }

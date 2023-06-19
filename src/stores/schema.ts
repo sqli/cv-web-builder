@@ -7,6 +7,9 @@ export const useSchema = defineStore('schema', {
     formData: ref({}),
   }),
   actions: {
+    updateImage(base64Img){
+      this.formData.imageProfile = base64Img
+    },
     updateData(data) {
       this.formData = data
     },

@@ -18,6 +18,7 @@ store.updateData({
   age: 80,
   email: 'perico@palote.com',
   telephone: '669696969',
+  imageProfile: '',
 })
 
 const drawer = ref(false)
@@ -71,12 +72,7 @@ const handleCommand = (command: string) => {
     </div>
   </el-affix>
 
-  <el-drawer
-    v-model="drawer"
-    direction="rtl"
-    :before-close="handleClose"
-    class="form-drawer"
-  >
+  <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
     <form-schema></form-schema>
   </el-drawer>
   <main><RouterView /></main>

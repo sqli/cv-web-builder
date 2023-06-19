@@ -58,10 +58,12 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
   top: 0;
   width: 100%;
   height: 100%;
+
   aside {
     background-color: var(--color-aside-bg);
     width: 36%;
   }
+
   .content {
     width: 64%;
     height: 100%;

@@ -1,38 +1,13 @@
 <script setup lang="ts">
-import { routeLocationKey, routerKey, RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import FormSchema from './components/FormSchema.vue'
 
-import { storeToRefs } from 'pinia'
-import { useSchema } from './stores/schema'
-
-const store = useSchema()
-
 // aqui pillariamos el data de la url
-store.updateData({
-  firstName: 'Perico',
-  lastName: 'Palotes',
-  age: 80,
-  email: 'perico@palote.com',
-  telephone: '669696969',
-})
 
 const drawer = ref(false)
-const handleClose = (done: () => void) => {
-  ElMessageBox.confirm('Are you sure you want to close this?')
-    .then(() => {
-      done()
-    })
-    .catch(() => {
-      // catch error
-    })
-}
-
 const router = useRouter()
-const route = useRoute()
 
 const handleCommand = (command: string) => {
   router.push(command)
@@ -59,6 +34,7 @@ const handleCommand = (command: string) => {
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="./default">Default</el-dropdown-item>
+                <el-dropdown-item command="./hello">Hello</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -71,12 +47,7 @@ const handleCommand = (command: string) => {
     </div>
   </el-affix>
 
-  <el-drawer
-    v-model="drawer"
-    direction="rtl"
-    :before-close="handleClose"
-    class="form-drawer"
-  >
+  <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
     <form-schema></form-schema>
   </el-drawer>
   <main><RouterView /></main>

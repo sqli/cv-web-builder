@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useSchema = defineStore('schema', {
@@ -7,6 +7,9 @@ export const useSchema = defineStore('schema', {
     formData: ref({}),
   }),
   actions: {
+    updateImage(base64Img){
+      this.formData.imageProfile = base64Img
+    },
     updateData(data) {
       this.formData = data
     },

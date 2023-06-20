@@ -1,6 +1,4 @@
 {
-  "title": "CV Data form",
-  "description": "Please add your data",
   "type": "object",
   "required": ["firstName", "lastName"],
   "ui:order": ["firstName", "LastName", "*", "password"],

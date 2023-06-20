@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import VueForm from '@lljj/vue3-form-element'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../stores/schema'
+import { useRouter, useRoute } from 'vue-router'
 
+import { encode } from 'url-safe-base64'
+
+const router = useRouter()
+const route = useRoute()
 const store = useSchema()
-
 const { formData, formSchema } = storeToRefs(store)
 const formFooter = {
   show: false,
@@ -14,15 +18,19 @@ const formFooter = {
   cancelBtn: 'cancel',
 }
 
-const imageProfile = ref<string>('')
-const imageWidthDesired = 960 //px
-
 onMounted(() => {
-  let image = document.location.search.split('?')[1]
-  if (image) {
-    imageProfile.value = image
+  if (route.params.j) {
+    const jsonSchema = JSON.parse(atob(route.params.j))
+    if (jsonSchema) {
+      store.updateData(jsonSchema)
+    }
   }
 })
+
+const submitea = () => {
+  router.push(`/hello/${encode(btoa(JSON.stringify(formData.value)))}`)
+}
+const imageWidthDesired = 300 //px
 
 const handleFileSelect = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
@@ -52,9 +60,8 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
       img.width * magicNumberWidth,
       img.height * magicNumberWidth,
     )
-    const dataURL = canvas.toDataURL('image/webp', 35)
+    const dataURL = canvas.toDataURL('image/webp', 15)
     store.updateImage(dataURL)
-    console.log(dataURL)
   }
 }
 </script>
@@ -71,4 +78,5 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
   <input id="fileInput" type="file" @change="handleFileSelect" />
   <VueForm v-model="formData" :schema="formSchema" :form-footer="formFooter">
   </VueForm>
+  <button @click="submitea">Submitea loc</button>
 </template>

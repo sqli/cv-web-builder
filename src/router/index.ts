@@ -14,8 +14,13 @@ const router = createRouter({
       component: () => import('../templates/default/Index.vue'),
     },
     {
-      path: '/hello',
+      path: '/hello/:j',
       name: 'Hello',
+      component: () => import('../components/HelloWorld.vue'),
+    },
+    {
+      path: '/hello',
+      name: 'HelloEmpty',
       component: () => import('../components/HelloWorld.vue'),
     },
     {

@@ -18,33 +18,44 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
           <inline-svg width="300" :src="bgLogo" class="bg-logo" />
           <inline-svg width="300" :src="imgLogo" class="img-logo" />
         </div>
-        <section>
+        <section class="tech">
           <h2>TECHNICAL KNOWLEDGE</h2>
           <ul>
-            <li>sdf</li>
+            <li
+              v-for="(tech, index) in formData.technicalKnowledge"
+              :key="index"
+            >
+              {{ tech }}
+            </li>
           </ul>
         </section>
-        <section>
+        <section class="roles">
           <h2>ROLES</h2>
           <ul>
-            <li>sdf</li>
+            <li v-for="(role, index) in formData.roles" :key="index">
+              {{ role }}
+            </li>
           </ul>
         </section>
         <section>
           <h2>WORK EXPERIENCE</h2>
           <ul>
-            <li>
-              <h3>2020 - PRESENT</h3>
-              <span>Senior software Engineer:</span>
-              <p>dfgdfgdfg</p>
+            <li v-for="(exp, index) in formData.workExperience" :key="index">
+              <span>{{ exp.timePeriod }}</span>
+              <span>{{ exp.position }}</span>
+              <p>{{ exp.description }}</p>
             </li>
           </ul>
         </section>
-        <pre>{{ formData }}</pre>
       </div>
-      <aside></aside>
+      <aside>
+        <picture>
+          <img :src="formData.imageProfile" />
+        </picture>
+      </aside>
     </div>
   </article>
+  <pre>{{ formData }}</pre>
 </template>
 
 <style lang="scss" scoped>
@@ -116,6 +127,19 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
         color: var(--color-secondary-500);
         font-size: 1.5rem;
         font-weight: bolder;
+        border-bottom: 1px solid currentColor;
+        margin-bottom: 1rem;
+        padding-left: 0.5rem;
+      }
+      ul {
+        list-style: none;
+        padding-left: 0.5rem;
+      }
+      &.tech {
+        color: var(--color-tertiary-500);
+      }
+      &.roles {
+        color: var(--color-primary-500);
       }
     }
   }

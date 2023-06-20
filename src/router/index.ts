@@ -19,6 +19,16 @@ const router = createRouter({
       component: () => import('../templates/default/Index.vue'),
     },
     {
+      path: '/hello/:j',
+      name: 'Hello',
+      component: () => import('../components/HelloWorld.vue'),
+    },
+    {
+      path: '/hello',
+      name: 'HelloEmpty',
+      component: () => import('../components/HelloWorld.vue'),
+    },
+    {
       path: '/colors',
       name: 'colors',
       // route level code-splitting

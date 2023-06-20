@@ -30,7 +30,7 @@ onMounted(() => {
 const submitea = () => {
   router.push(`/hello/${encode(btoa(JSON.stringify(formData.value)))}`)
 }
-const imageWidthDesired = 300 //px
+const imageWidthDesired = 600 //px
 
 const handleFileSelect = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
@@ -60,7 +60,7 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
       img.width * magicNumberWidth,
       img.height * magicNumberWidth,
     )
-    const dataURL = canvas.toDataURL('image/webp', 15)
+    const dataURL = canvas.toDataURL('image/webp', 0.3)
     store.updateImage(dataURL)
   }
 }

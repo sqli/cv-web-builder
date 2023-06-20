@@ -18,6 +18,28 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
           <inline-svg width="300" :src="bgLogo" class="bg-logo" />
           <inline-svg width="300" :src="imgLogo" class="img-logo" />
         </div>
+        <section>
+          <h2>TECHNICAL KNOWLEDGE</h2>
+          <ul>
+            <li>sdf</li>
+          </ul>
+        </section>
+        <section>
+          <h2>ROLES</h2>
+          <ul>
+            <li>sdf</li>
+          </ul>
+        </section>
+        <section>
+          <h2>WORK EXPERIENCE</h2>
+          <ul>
+            <li>
+              <h3>2020 - PRESENT</h3>
+              <span>Senior software Engineer:</span>
+              <p>dfgdfgdfg</p>
+            </li>
+          </ul>
+        </section>
         <pre>{{ formData }}</pre>
       </div>
       <aside></aside>
@@ -58,6 +80,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
   top: 0;
   width: 100%;
   height: 100%;
+  font-family: var(--el-font-family);
   aside {
     background-color: var(--color-aside-bg);
     width: 36%;
@@ -83,6 +106,14 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
         top: 1cm;
         width: 13cm !important;
         z-index: 1;
+      }
+    }
+    section {
+      margin: 1rem;
+      h2 {
+        color: var(--color-secondary-500);
+        font-size: 1.5rem;
+        font-weight: bolder;
       }
     }
   }

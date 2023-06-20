@@ -14,6 +14,9 @@
   "include": ["src"],
   "compilerOptions": {
     "types": ["element-plus/global"],
-    "lib": ["ES6", "DOM"]
+    "lib": ["ES6", "DOM"],
+    "paths": {
+      "@/*": ["./*"]
+    }
   }
 }

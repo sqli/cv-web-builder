@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import('../templates/default/Index.vue'),
     },
     {
+      path: '/default/:j',
+      name: 'DefaultSdf',
+      component: () => import('../templates/default/Index.vue'),
+    },
+    {
       path: '/colors',
       name: 'colors',
       // route level code-splitting

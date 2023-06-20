@@ -3,11 +3,10 @@ import { routeLocationKey, routerKey, RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
-
 import FormSchema from './components/FormSchema.vue'
-
-import { storeToRefs } from 'pinia'
 import { useSchema } from './stores/schema'
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 const store = useSchema()
 
@@ -37,6 +36,32 @@ const route = useRoute()
 const handleCommand = (command: string) => {
   router.push(command)
 }
+
+const print = () => {
+  const filename = 'Resume.pdf'
+  const a4Width = 210 // paper Standard Width
+  const a4Height = 297 // paper Standard Height
+  const paper = document.querySelector('.page')
+
+  html2canvas(paper, {
+    scale: 5,
+    allowTaint: true,
+    useCORS: true,
+    logging: false,
+  }).then((canvas) => {
+    let pdf = new jsPDF('p', 'mm', 'a4')
+    pdf.addImage(
+      canvas.toDataURL('image/jpeg'),
+      'JPEG',
+      -2,
+      0,
+      a4Width,
+      a4Height,
+    )
+
+    pdf.save(filename)
+  })
+}
 </script>
 
 <template>
@@ -62,7 +87,7 @@ const handleCommand = (command: string) => {
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-button>Export to PDF</el-button>
+          <el-button @click="print">Export to PDF</el-button>
           <el-button type="primary" class="ml-2" @click="drawer = true"
             >Edit</el-button
           >
@@ -102,6 +127,9 @@ const handleCommand = (command: string) => {
   }
   .template-selector {
     padding: 4px 12px;
+  }
+  @media print {
+    display: none;
   }
 }
 main {

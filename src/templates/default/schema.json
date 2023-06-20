@@ -18,20 +18,15 @@
       },
       "err:required": "Last Name required"
     },
-    "bio": {
+    "mainRole": {
       "type": "string",
-      "title": "Bio",
-      "minLength": 10
+      "title": "Main Role Title",
+      "default": ""
     },
-    "password": {
-      "title": "A string value",
+    "secondaryRole": {
+      "title": "Secondary Role Title",
       "type": "string",
-      "default": "lorem ipsum"
-    },
-    "telephone": {
-      "type": "string",
-      "title": "Telephone",
-      "minLength": 10
+      "default": ""
     },
     "technicalKnowledge": {
       "type": "array",
@@ -40,6 +35,44 @@
         "title": "Knowledge",
         "type": "string",
         "default": ""
+      }
+    },
+    "roles": {
+      "type": "array",
+      "title": "Roles",
+      "items": {
+        "title": "Role title",
+        "type": "string",
+        "default": ""
+      }
+    },
+    "hashTags": {
+      "type": "array",
+      "title": "Knowledge Tags",
+      "items": {
+        "title": "Tag",
+        "type": "string",
+        "default": "Developer"
+      }
+    },
+    "certificationsAwards": {
+      "type": "array",
+      "title": "Certifications / Awards",
+      "items": {
+        "title": "Knowledge",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          }
+        }
       }
     },
     "aboutYou": {
@@ -51,6 +84,31 @@
           "title": "this textarea will support markdown",
           "ui:options": {
             "type": "textarea"
+          }
+        }
+      }
+    },
+    "workExperience": {
+      "type": "array",
+      "title": "Work Experience",
+      "items": {
+        "title": "Knowledge",
+        "type": "object",
+        "properties": {
+          "timePeriod": {
+            "type": "string",
+            "title": "Time period",
+            "default": "2020 - Present"
+          },
+          "position": {
+            "type": "string",
+            "title": "Position",
+            "default": ""
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
           }
         }
       }

@@ -20,12 +20,12 @@ const router = createRouter({
     },
     {
       path: '/hello/:j',
-      name: 'Hello',
+      name: 'HelloSdf',
       component: () => import('../components/HelloWorld.vue'),
     },
     {
       path: '/hello',
-      name: 'HelloEmpty',
+      name: 'Hello',
       component: () => import('../components/HelloWorld.vue'),
     },
     {

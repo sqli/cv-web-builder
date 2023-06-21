@@ -1,10 +1,25 @@
-<script setup>
+<script setup lang="ts">
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../../stores/schema'
 import InlineSvg from '../../components/InlineSvg.vue'
 import schema from './schema.json'
+import { useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
+
 const store = useSchema()
 store.updateSchema(schema)
+const route = useRoute()
+
+onMounted(() => {
+  try {
+    const jsonSchema = JSON.parse(atob(route.params.j))
+    store.updateData(jsonSchema)
+  } catch (error) {
+    ElMessage.error('Information CV is corrupted.')
+  }
+})
+
 const { formData } = storeToRefs(store)
 const bgLogo = new URL('./backgroundLogo.svg', import.meta.url).href
 const imgLogo = new URL('./logo.svg', import.meta.url).href

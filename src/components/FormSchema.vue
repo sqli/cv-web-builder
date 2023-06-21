@@ -18,19 +18,14 @@ const formFooter = {
   cancelBtn: 'cancel',
 }
 
-onMounted(() => {
-  if (route.params.j) {
-    const jsonSchema = JSON.parse(atob(route.params.j))
-    if (jsonSchema) {
-      store.updateData(jsonSchema)
-    }
+const SaveUrlForm = () => {
+  if (formData.value) {
+    router.push({
+      name: `DefaultSdf`,
+      params: { j: `${encode(btoa(JSON.stringify(formData.value)))}` },
+    })
   }
-})
-
-const submitea = () => {
-  router.push(`/hello/${encode(btoa(JSON.stringify(formData.value)))}`)
 }
-const imageWidthDesired = 600 //px
 
 const handleFileSelect = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
@@ -50,16 +45,37 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
   img.src = event.target?.result as string
 
   img.onload = function () {
-    const magicNumberWidth = imageWidthDesired / img.width
-    canvas.width = img.width * magicNumberWidth
-    canvas.height = img.height * magicNumberWidth
+    const imageResolution = 600
+
+    const aspectRatio = img.width / img.height
+    let targetWidth = img.width
+    let targetHeight = img.height
+    let offsetX = 0
+    let offsetY = 0
+
+    if (aspectRatio > 1) {
+      targetWidth = img.height
+      offsetX = (img.width - targetWidth) / 2
+    } else if (aspectRatio < 1) {
+      targetHeight = img.width
+      offsetY = (img.height - targetHeight) / 2
+    }
+
+    canvas.width = imageResolution
+    canvas.height = imageResolution
+
     context!.drawImage(
       img,
+      offsetX,
+      offsetY,
+      targetWidth,
+      targetHeight,
       0,
       0,
-      img.width * magicNumberWidth,
-      img.height * magicNumberWidth,
+      imageResolution,
+      imageResolution,
     )
+
     const dataURL = canvas.toDataURL('image/webp', 0.3)
     store.updateImage(dataURL)
   }
@@ -78,5 +94,5 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
   <input id="fileInput" type="file" @change="handleFileSelect" />
   <VueForm v-model="formData" :schema="formSchema" :form-footer="formFooter">
   </VueForm>
-  <button @click="submitea">Submitea loc</button>
+  <button @click="SaveUrlForm">Save CV in URL</button>
 </template>

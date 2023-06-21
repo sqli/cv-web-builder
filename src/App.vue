@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import FormSchema from './components/FormSchema.vue'
 import { useSchema } from './stores/schema'
@@ -13,9 +13,12 @@ const store = useSchema()
 
 const drawer = ref(false)
 const router = useRouter()
+const route = useRoute()
 
 const handleCommand = (command: string) => {
-  router.push(command)
+  if (route.params.j)
+    router.push({ name: `${command}Sdf`, params: route.params })
+  else router.push({ name: command })
 }
 
 const print = () => {
@@ -64,8 +67,8 @@ const print = () => {
             </el-text>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item command="./default">Default</el-dropdown-item>
-                <el-dropdown-item command="./hello">Hello</el-dropdown-item>
+                <el-dropdown-item command="Default">Default</el-dropdown-item>
+                <el-dropdown-item command="Hello">Hello</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>

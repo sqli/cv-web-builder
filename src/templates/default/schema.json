@@ -1,5 +1,7 @@
 {
   "type": "object",
+  "title": "Personal Data",
+  "description": "Please, add your data",
   "required": ["firstName", "lastName"],
   "ui:order": ["firstName", "LastName", "*", "password"],
   "properties": {
@@ -16,13 +18,13 @@
       },
       "err:required": "Last Name required"
     },
-    "mainRole": {
+    "mainPositionRole": {
       "type": "string",
-      "title": "Main Role Title",
+      "title": "Main Role Position Title",
       "default": ""
     },
-    "secondaryRole": {
-      "title": "Secondary Role Title",
+    "secondaryPositionRole": {
+      "title": "Secondary Position Role Title",
       "type": "string",
       "default": ""
     },
@@ -31,8 +33,19 @@
       "title": "Technical Knowledge",
       "items": {
         "title": "Knowledge",
-        "type": "string",
-        "default": ""
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "enhance": {
+            "type": "boolean",
+            "title": "Enhance",
+            "default": false
+          }
+        }
       }
     },
     "roles": {
@@ -87,8 +100,42 @@
       }
     },
     "workExperience": {
-      "type": "array",
+      "type": "object",
       "title": "Work Experience",
+      "properties": {
+        "newPage": {
+          "type": "boolean",
+          "title": "Move work experience to new page",
+          "default": false
+        },
+        "Experience": {
+          "type": "array",
+          "ui:options": {
+            "showIndexNumber": true
+          },
+          "items": {
+            "title": "Experience",
+            "type": "object",
+            "properties": {
+              "timePeriod": {
+                "type": "string",
+                "title": "Time period",
+                "default": "2020 - Present"
+              },
+              "position": {
+                "type": "string",
+                "title": "Position",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "title": "Description",
+                "default": ""
+              }
+            }
+          }
+        }
+      },
       "items": {
         "title": "Knowledge",
         "type": "object",

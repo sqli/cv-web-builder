@@ -28,22 +28,26 @@ const print = () => {
   const paper = document.querySelector('.page')
 
   html2canvas(paper, {
-    scale: 5,
+    scale: 2,
     allowTaint: true,
     useCORS: true,
     logging: false,
-  }).then((canvas) => {
-    let pdf = new jsPDF('p', 'mm', 'a4')
-    pdf.addImage(
-      canvas.toDataURL('image/jpeg'),
-      'JPEG',
-      -2,
-      0,
-      a4Width,
-      a4Height,
-    )
-
-    pdf.save(filename)
+  }).then((canvas: any) => {
+    const imgWidth = 209.5
+    const pageHeight = 297.5
+    const imgHeight = (canvas.height * imgWidth) / canvas.width
+    let heightLeft = imgHeight
+    let position = 0
+    heightLeft -= pageHeight
+    const doc = new jsPDF('p', 'mm')
+    doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST')
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight
+      doc.addPage()
+      doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST')
+      heightLeft -= pageHeight
+    }
+    doc.save('Downld.pdf')
   })
 }
 </script>

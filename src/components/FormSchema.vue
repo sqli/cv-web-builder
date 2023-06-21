@@ -88,7 +88,7 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
   >
     <div class="fieldGroupWrap objectField fieldItem __pathRoot">
       <h3 class="fieldGroupWrap_title">CV Data form</h3>
-      <p class="fieldGroupWrap_des">Please add your data</p>
+      <p class="fieldGroupWrap_des">Please add your picture</p>
     </div>
   </div>
   <input id="fileInput" type="file" @change="handleFileSelect" />
@@ -96,3 +96,9 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
   </VueForm>
   <button @click="SaveUrlForm">Save CV in URL</button>
 </template>
+
+<style lang="scss" scoped>
+#fileInput {
+  margin-bottom: 1rem;
+}
+</style>

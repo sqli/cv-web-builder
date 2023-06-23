@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import VueForm from '@lljj/vue3-form-element'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../stores/schema'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 import { encode } from 'url-safe-base64'
 
 const router = useRouter()
-const route = useRoute()
 const store = useSchema()
 const { formData, formSchema } = storeToRefs(store)
 const formFooter = {
@@ -27,8 +25,7 @@ const SaveUrlForm = () => {
   }
 }
 
-const handleFileSelect = (event: Event) => {
-  const file = (event.target as HTMLInputElement).files?.[0]
+const handleFileSelect = (file) => {
   if (file) {
     const reader = new FileReader()
     reader.onload = (event) => {
@@ -36,6 +33,7 @@ const handleFileSelect = (event: Event) => {
     }
     reader.readAsDataURL(file)
   }
+  return false
 }
 
 const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
@@ -78,6 +76,7 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
 
     const dataURL = canvas.toDataURL('image/webp', 0.3)
     store.updateImage(dataURL)
+    console.log(dataURL.length)
   }
 }
 </script>
@@ -91,7 +90,10 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
       <p class="fieldGroupWrap_des">Please add your picture</p>
     </div>
   </div>
-  <input id="fileInput" type="file" @change="handleFileSelect" />
+
+  <el-upload :before-upload="handleFileSelect" class="upload-demo">
+    <el-button type="primary">Click to upload</el-button>
+  </el-upload>
   <VueForm v-model="formData" :schema="formSchema" :form-footer="formFooter">
   </VueForm>
   <button @click="SaveUrlForm">Save CV in URL</button>

@@ -6,6 +6,7 @@ import InlineSvg from '../../components/InlineSvg.vue'
 import schema from './schema.json'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { decode } from 'url-safe-base64'
 
 const store = useSchema()
 store.updateSchema(schema)
@@ -13,10 +14,12 @@ const route = useRoute()
 
 onMounted(() => {
   try {
-    const jsonSchema = JSON.parse(atob(route.params.j))
-    store.updateData(jsonSchema)
+    if (route.params.j) {
+      const jsonSchema = JSON.parse(atob(decode(route.params.j)))
+      store.updateData(jsonSchema)
+    }
   } catch (error) {
-    ElMessage.error('Information CV is corrupted.')
+    ElMessage.error('CV is corrupted.', error)
   }
 })
 
@@ -59,7 +62,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
             </li>
           </ul>
         </section>
-        <section v-if="!formData.workExperience.newPage">
+        <section v-if="!formData.workExperience?.newPage">
           <h2>WORK EXPERIENCE</h2>
           <ul>
             <li v-for="(exp, index) in formData.workExperience" :key="index">
@@ -78,7 +81,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
     </div>
 
     <div
-      v-if="formData.workExperience.newPage"
+      v-if="formData.workExperience?.newPage"
       class="page-content second-page"
     >
       <div class="content">

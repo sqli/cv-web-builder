@@ -12,7 +12,9 @@ const { formData } = storeToRefs(store)
 const imageProfile = ref<string>('')
 onMounted(() => {
   if (route.params.j) {
-    const imageProfileTemp = JSON.parse(atob(route.params.j)).imageProfile
+    const imageProfileTemp = JSON.parse(
+      atob(decode(route.params.j)),
+    ).imageProfile
     if (imageProfileTemp) {
       imageProfile.value = imageProfileTemp
     }

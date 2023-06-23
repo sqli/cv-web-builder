@@ -13,6 +13,7 @@
   ],
   "include": ["src"],
   "compilerOptions": {
+    "moduleResolution": "node",
     "types": ["element-plus/global", "vite/client"],
     "target": "ESNext",
     "lib": ["ES6", "DOM", "ES2020"],

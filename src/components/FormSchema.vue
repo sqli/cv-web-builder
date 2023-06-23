@@ -79,7 +79,7 @@ const loadNewImageAsB64 = (
 
     const dataURL = canvas.toDataURL('image/webp', qualityImage)
     store.updateImage(dataURL)
-    if (encode(btoa(JSON.stringify(formData.value))).length > 15000) {
+    if (encode(btoa(JSON.stringify(formData.value))).length > 13000) {
       if (qualityImage < 0) {
         ElMessage.error('size of CV too big for sharing by URL.')
       } else loadNewImageAsB64(event, qualityImage - 0.01)

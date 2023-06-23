@@ -2,7 +2,6 @@
   "type": "object",
   "title": "Personal Data",
   "description": "Please, add your data",
-  "required": ["firstName", "lastName"],
   "ui:order": ["firstName", "LastName", "*", "password"],
   "properties": {
     "firstName": {
@@ -108,7 +107,7 @@
           "title": "Move work experience to new page",
           "default": false
         },
-        "Experience": {
+        "experience": {
           "type": "array",
           "ui:options": {
             "showIndexNumber": true

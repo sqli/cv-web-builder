@@ -8,6 +8,7 @@ import FormSchema from './components/FormSchema.vue'
 import { useSchema } from './stores/schema'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+import { ElLoading } from 'element-plus'
 
 const store = useSchema()
 const { formData } = storeToRefs(store)
@@ -30,6 +31,13 @@ const print = () => {
   const a4Height = 297 // paper Standard Height
   const paper = document.querySelector('.page')
 
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Building PDF',
+    background: 'rgba(255, 255, 255, 1)',
+  })
+  document.querySelector('#app').classList.add('html2canvas')
+
   html2canvas(paper, {
     scale: 2,
     allowTaint: true,
@@ -51,6 +59,8 @@ const print = () => {
       heightLeft -= pageHeight
     }
     doc.save('Downld.pdf')
+    document.querySelector('#app').classList.remove('html2canvas')
+    loading.close()
   })
 }
 
@@ -107,30 +117,31 @@ const share = () => {
 
 <style lang="scss" scoped>
 .top-menu {
-  background-color: white;
-  padding: 24px;
-  border-bottom: 1px solid var(--el-menu-border-color);
-  margin: 0 auto;
-  .el-dropdown + .el-dropdown {
-    margin-left: 12px;
-  }
-  .el-dropdown-link {
-    cursor: pointer;
-    color: var(--el-color-primary);
-    display: flex;
-    align-items: center;
-  }
-  .el-text {
-    outline: none;
-  }
-  .template-selector {
-    padding: 4px 12px;
-  }
-  @media print {
-    display: none;
+  .el-page-header__header {
+    background-color: white;
+    padding: 24px;
+    border-bottom: 1px solid var(--el-menu-border-color);
+    .el-dropdown + .el-dropdown {
+      margin-left: 12px;
+    }
+    .el-dropdown-link {
+      cursor: pointer;
+      color: var(--el-color-primary);
+      display: flex;
+      align-items: center;
+    }
+    .el-text {
+      outline: none;
+    }
+    .template-selector {
+      padding: 4px 12px;
+    }
+    @media print {
+      display: none;
+    }
   }
 }
 main {
-  margin-top: 24px;
+  padding-top: 24px;
 }
 </style>

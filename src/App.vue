@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { encode } from 'url-safe-base64'
 
 import FormSchema from './components/FormSchema.vue'
 import { useSchema } from './stores/schema'
@@ -9,6 +11,7 @@ import html2canvas from 'html2canvas'
 import { ElLoading } from 'element-plus'
 
 const store = useSchema()
+const { formData } = storeToRefs(store)
 
 // aqui pillariamos el data de la url
 
@@ -60,10 +63,20 @@ const print = () => {
     loading.close()
   })
 }
+
+const share = () => {
+  let formDatatemp = { ...formData.value, readOnly: true }
+  const pathSinParams = window.location.pathname.split('/')
+
+  navigator.clipboard.writeText(
+    `${location.host}/${pathSinParams[1]}/
+    ${encode(btoa(JSON.stringify(formDatatemp)))}`,
+  )
+}
 </script>
 
 <template>
-  <el-affix :offset="0" class="top-menu">
+  <el-affix v-if="!formData.readOnly" :offset="0" class="top-menu">
     <div class="el-page-header__header">
       <div class="el-page-header__left">
         <div class="el-page-header__content">
@@ -86,6 +99,7 @@ const print = () => {
               </el-dropdown-menu>
             </template>
           </el-dropdown>
+          <el-button type="info" @click="share">Share CV</el-button>
           <el-button @click="print">Export to PDF</el-button>
           <el-button type="primary" class="ml-2" @click="drawer = true"
             >Edit</el-button

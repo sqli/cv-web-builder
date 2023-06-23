@@ -7,6 +7,7 @@ import schema from './schema.json'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { decode } from 'url-safe-base64'
+import { PersonalData } from './PersonalData.model'
 
 const store = useSchema()
 store.updateSchema(schema)
@@ -15,7 +16,10 @@ const route = useRoute()
 onMounted(() => {
   try {
     if (route.params.j) {
-      const jsonSchema = JSON.parse(atob(decode(route.params.j)))
+      const jsonString = Array.isArray(route.params.j)
+        ? route.params.j[0]
+        : route.params.j
+      const jsonSchema = JSON.parse(atob(decode(jsonString)))
       store.updateData(jsonSchema)
     }
   } catch (error) {
@@ -23,7 +27,8 @@ onMounted(() => {
   }
 })
 
-const { formData } = storeToRefs(store)
+const { formData } = storeToRefs(store) as { formData: PersonalData }
+
 const bgLogo = new URL('./backgroundLogo.svg', import.meta.url).href
 const imgLogo = new URL('./logo.svg', import.meta.url).href
 </script>
@@ -33,20 +38,18 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
     <div class="page-content">
       <div class="content">
         <div class="head">
-          <inline-svg width="300" :src="bgLogo" class="bg-logo" />
-          <inline-svg width="300" :src="imgLogo" class="img-logo" />
+          <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
+          <inline-svg :width="300" :src="imgLogo" class="img-logo" />
         </div>
         <section class="tech">
           <h2>TECHNICAL KNOWLEDGE</h2>
           <ul>
             <li
-              v-for="(tech, index) in formData?.technicalKnowledge"
+              v-for="(tech, index) in formData.technicalKnowledge"
               :key="index"
             >
               <template v-if="tech.enhance">
-                <strong>
-                  {{ tech.title }}
-                </strong>
+                <strong> {{ tech.title }} </strong>
               </template>
               <template v-else>
                 {{ tech.title }}
@@ -57,16 +60,16 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
         <section class="roles">
           <h2>ROLES</h2>
           <ul>
-            <li v-for="(role, index) in formData?.roles" :key="index">
+            <li v-for="(role, index) in formData.roles" :key="index">
               {{ role }}
             </li>
           </ul>
         </section>
-        <section v-if="!formData?.workExperience?.newPage" class="experience">
+        <section v-if="!formData.workExperience?.newPage" class="experience">
           <h2>WORK EXPERIENCE</h2>
           <ul>
             <li
-              v-for="(exp, index) in formData?.workExperience?.experience"
+              v-for="(exp, index) in formData.workExperience?.experience"
               :key="index"
             >
               <strong>{{ exp.timePeriod }}</strong>
@@ -78,14 +81,14 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
       </div>
       <aside>
         <picture>
-          <img :src="formData?.imageProfile" />
+          <img :src="formData.imageProfile" />
         </picture>
         <section>
-          <strong>{{ formData?.firstName }} {{ formData?.lastName }}</strong>
-          <p>{{ formData?.mainPositionRole }}</p>
-          <p>{{ formData?.secondaryPositionRole }}</p>
+          <strong>{{ formData.firstName }} {{ formData.lastName }}</strong>
+          <p>{{ formData.mainPositionRole }}</p>
+          <p>{{ formData.secondaryPositionRole }}</p>
           <ul class="tags">
-            <li v-for="(tag, index) in formData?.hashTags" :key="index">
+            <li v-for="(tag, index) in formData.hashTags" :key="index">
               #{{ tag }}
             </li>
           </ul>
@@ -94,7 +97,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
           <h2>CERTIFICATIONS / AWARDS</h2>
           <ul>
             <li
-              v-for="(cert, index) in formData?.certificationsAwards"
+              v-for="(cert, index) in formData.certificationsAwards"
               :key="index"
             >
               <strong>{{ cert.title }}</strong>
@@ -105,13 +108,13 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
       </aside>
     </div>
 
-    <div v-if="formData?.workExperience?.newPage" class="page-content">
+    <div v-if="formData.workExperience?.newPage" class="page-content">
       <div class="content">
         <section class="experience">
           <h2>WORK EXPERIENCE</h2>
           <ul>
             <li
-              v-for="(exp, index) in formData?.workExperience?.experience"
+              v-for="(exp, index) in formData.workExperience?.experience"
               :key="index"
             >
               <strong>{{ exp.timePeriod }}</strong>
@@ -123,8 +126,6 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
       </div>
     </div>
   </article>
-  <br /><br /><br /><br /><br /><br /><br /><br /><br />
-  <pre>{{ formData }}</pre>
 </template>
 
 <style lang="scss" scoped>

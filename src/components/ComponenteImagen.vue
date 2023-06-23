@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useSchema } from '../stores/schema.ts'
+import { useSchema } from '../stores/schema'
 import { useRoute } from 'vue-router'
 import { decode } from 'url-safe-base64'
 

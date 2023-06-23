@@ -25,7 +25,7 @@ const SaveUrlForm = () => {
   }
 }
 
-const handleFileSelect = (file) => {
+const handleFileSelect = (file: File) => {
   if (file) {
     const reader = new FileReader()
     reader.onload = (event) => {

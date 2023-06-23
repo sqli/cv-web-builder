@@ -13,8 +13,9 @@
   ],
   "include": ["src"],
   "compilerOptions": {
-    "types": ["element-plus/global"],
-    "lib": ["ES6", "DOM"],
+    "types": ["element-plus/global", "vite/client"],
+    "target": "ESNext",
+    "lib": ["ES6", "DOM", "ES2020"],
     "paths": {
       "@/*": ["./*"]
     }

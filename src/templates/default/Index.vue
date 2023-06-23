@@ -21,7 +21,7 @@ onMounted(() => {
       const jsonSchema = JSON.parse(atob(decode(jsonString)))
       store.updateData(jsonSchema)
     }
-  } catch (error) {
+  } catch (error: any) {
     ElMessage.error('CV is corrupted.', error)
   }
 })

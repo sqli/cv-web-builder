@@ -7,7 +7,6 @@ import schema from './schema.json'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { decode } from 'url-safe-base64'
-import { PersonalData } from './PersonalData.model'
 
 const store = useSchema()
 store.updateSchema(schema)
@@ -27,7 +26,7 @@ onMounted(() => {
   }
 })
 
-const { formData } = storeToRefs(store) as { formData: PersonalData }
+const { formData } = storeToRefs(store)
 
 const bgLogo = new URL('./backgroundLogo.svg', import.meta.url).href
 const imgLogo = new URL('./logo.svg', import.meta.url).href

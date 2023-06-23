@@ -3,7 +3,7 @@ import VueForm from '@lljj/vue3-form-element'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../stores/schema'
 import { useRouter } from 'vue-router'
-
+import { ElMessage } from 'element-plus'
 import { encode } from 'url-safe-base64'
 
 const router = useRouter()
@@ -29,14 +29,17 @@ const handleFileSelect = (file) => {
   if (file) {
     const reader = new FileReader()
     reader.onload = (event) => {
-      loadNewImageAsB64(event)
+      loadNewImageAsB64(event, 0.9)
     }
     reader.readAsDataURL(file)
   }
   return false
 }
 
-const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
+const loadNewImageAsB64 = (
+  event: ProgressEvent<FileReader>,
+  qualityImage: number,
+) => {
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
   const img = new Image()
@@ -74,9 +77,13 @@ const loadNewImageAsB64 = (event: ProgressEvent<FileReader>) => {
       imageResolution,
     )
 
-    const dataURL = canvas.toDataURL('image/webp', 0.3)
+    const dataURL = canvas.toDataURL('image/webp', qualityImage)
     store.updateImage(dataURL)
-    console.log(dataURL.length)
+    if (encode(btoa(JSON.stringify(formData.value))).length > 15000) {
+      if (qualityImage < 0) {
+        ElMessage.error('size of CV too big for sharing by URL.')
+      } else loadNewImageAsB64(event, qualityImage - 0.01)
+    }
   }
 }
 </script>

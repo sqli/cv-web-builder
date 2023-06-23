@@ -6,13 +6,13 @@ import FormSchema from './components/FormSchema.vue'
 import { useSchema } from './stores/schema'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+import { ElLoading } from 'element-plus'
 
 const store = useSchema()
 
 // aqui pillariamos el data de la url
 
 const drawer = ref(false)
-const loading = ref(false)
 const router = useRouter()
 const route = useRoute()
 
@@ -27,7 +27,12 @@ const print = () => {
   const a4Width = 210 // paper Standard Width
   const a4Height = 297 // paper Standard Height
   const paper = document.querySelector('.page')
-  loading.value = true
+
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Building PDF',
+    background: 'rgba(255, 255, 255, 1)',
+  })
   document.querySelector('#app').classList.add('html2canvas')
 
   html2canvas(paper, {
@@ -52,50 +57,48 @@ const print = () => {
     }
     doc.save('Downld.pdf')
     document.querySelector('#app').classList.remove('html2canvas')
-    loading.value = false
+    loading.close()
   })
 }
 </script>
 
 <template>
-  <div v-loading="loading">
-    <el-affix :offset="0" class="top-menu">
-      <div class="el-page-header__header">
-        <div class="el-page-header__left">
-          <div class="el-page-header__content">
-            <div class="flex items-center">
-              <el-text class="mx-1" size="large"> CV Web Builder </el-text>
-            </div>
-          </div>
-        </div>
-        <div class="el-page-header__extra">
+  <el-affix :offset="0" class="top-menu">
+    <div class="el-page-header__header">
+      <div class="el-page-header__left">
+        <div class="el-page-header__content">
           <div class="flex items-center">
-            <el-dropdown class="template-selector" @command="handleCommand">
-              <el-text class="mx-1" size="large">
-                Templates
-                <el-icon class="el-icon--right"><arrow-down /></el-icon>
-              </el-text>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item command="Default">Default</el-dropdown-item>
-                  <el-dropdown-item command="Hello">Hello</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <el-button @click="print">Export to PDF</el-button>
-            <el-button type="primary" class="ml-2" @click="drawer = true"
-              >Edit</el-button
-            >
+            <el-text class="mx-1" size="large"> CV Web Builder </el-text>
           </div>
         </div>
       </div>
-    </el-affix>
+      <div class="el-page-header__extra">
+        <div class="flex items-center">
+          <el-dropdown class="template-selector" @command="handleCommand">
+            <el-text class="mx-1" size="large">
+              Templates
+              <el-icon class="el-icon--right"><arrow-down /></el-icon>
+            </el-text>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="Default">Default</el-dropdown-item>
+                <el-dropdown-item command="Hello">Hello</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <el-button @click="print">Export to PDF</el-button>
+          <el-button type="primary" class="ml-2" @click="drawer = true"
+            >Edit</el-button
+          >
+        </div>
+      </div>
+    </div>
+  </el-affix>
 
-    <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
-      <form-schema></form-schema>
-    </el-drawer>
-    <main><RouterView /></main>
-  </div>
+  <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
+    <form-schema></form-schema>
+  </el-drawer>
+  <main><RouterView /></main>
 </template>
 
 <style lang="scss" scoped>

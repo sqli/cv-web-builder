@@ -13,7 +13,7 @@ const imageProfile = ref<string>('')
 onMounted(() => {
   if (route.params.j) {
     const imageProfileTemp = JSON.parse(
-      atob(decode(route.params.j)),
+      atob(decode(route.params.j as string)),
     ).imageProfile
     if (imageProfileTemp) {
       imageProfile.value = imageProfileTemp

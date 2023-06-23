@@ -29,39 +29,52 @@ const print = () => {
   const filename = 'Resume.pdf'
   const a4Width = 210 // paper Standard Width
   const a4Height = 297 // paper Standard Height
-  const paper = document.querySelector('.page')
+  const paper = <HTMLScriptElement>document.querySelector('.page')
 
   const loading = ElLoading.service({
     lock: true,
     text: 'Building PDF',
     background: 'rgba(255, 255, 255, 1)',
   })
-  document.querySelector('#app').classList.add('html2canvas')
 
-  html2canvas(paper, {
-    scale: 2,
-    allowTaint: true,
-    useCORS: true,
-    logging: false,
-  }).then((canvas: any) => {
-    const imgWidth = 209.5
-    const pageHeight = 297.5
-    const imgHeight = (canvas.height * imgWidth) / canvas.width
-    let heightLeft = imgHeight
-    let position = 0
-    heightLeft -= pageHeight
-    const doc = new jsPDF('p', 'mm')
-    doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST')
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight
-      doc.addPage()
-      doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST')
+  const container = <HTMLScriptElement>document.querySelector('#app')
+  if (container) container.classList.add('html2canvas')
+
+  if (paper) {
+    html2canvas(paper, {
+      scale: 2,
+      allowTaint: true,
+      useCORS: true,
+      logging: false,
+    }).then((canvas: any) => {
+      const imgWidth = 209.5
+      const pageHeight = 297.5
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+      let position = 0
       heightLeft -= pageHeight
-    }
-    doc.save('Downld.pdf')
-    document.querySelector('#app').classList.remove('html2canvas')
-    loading.close()
-  })
+      const doc = new jsPDF('p', 'mm')
+      doc.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST')
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        doc.addPage()
+        doc.addImage(
+          canvas,
+          'PNG',
+          0,
+          position,
+          imgWidth,
+          imgHeight,
+          '',
+          'FAST',
+        )
+        heightLeft -= pageHeight
+      }
+      doc.save('Downld.pdf')
+      container.classList.remove('html2canvas')
+      loading.close()
+    })
+  }
 }
 
 const share = () => {

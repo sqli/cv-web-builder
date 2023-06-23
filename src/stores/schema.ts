@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const useSchema = defineStore('schema', {
   state: () => ({
     formSchema: ref({}),
-    formData: ref({}),
+    formData: ref({imageProfile:''}),
   }),
   actions: {
     updateImage(base64Img){

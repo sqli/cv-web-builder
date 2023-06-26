@@ -80,7 +80,7 @@ const loadNewImageAsB64 = (
     const dataURL = canvas.toDataURL('image/webp', qualityImage)
     if (
       encode(btoa(JSON.stringify({ ...formData.value, imageProfile: dataURL })))
-        .length < 13000
+        .length < 8000
     ) {
       store.updateImage(dataURL)
     } else {

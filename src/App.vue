@@ -100,12 +100,20 @@ const print = () => {
 
 const share = () => {
   let formDatatemp = { ...formData.value, readOnly: true }
-  const pathSinParams = window.location.pathname.split('/')
 
-  navigator.clipboard.writeText(
-    `${location.host}/${pathSinParams[1]}/
-    ${encode(btoa(JSON.stringify(formDatatemp)))}`,
-  )
+  const pathSinParams = window.location.pathname.split('/')
+  let path = window.location.origin + '/'
+  path += pathSinParams.reduce((accumulator, currentValue, currentIndex) => {
+    if (currentIndex !== 0 && currentIndex < pathSinParams.length - 1) {
+      return !accumulator
+        ? currentValue + '/'
+        : accumulator + currentValue + '/'
+    } else {
+      return accumulator || ''
+    }
+  }, '')
+  path += encode(btoa(JSON.stringify(formDatatemp)))
+  navigator.clipboard.writeText(path)
 }
 </script>
 

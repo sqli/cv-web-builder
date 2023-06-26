@@ -7,6 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), vueJsx()],
+  base: '/cv-web-builder/',
   build: {
     minify: true,
   },
@@ -15,5 +16,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  base: process.env.NODE_ENV === 'production' ? '/<REPO>/' : './',
 })

@@ -18,16 +18,6 @@ const router = createRouter({
       name: 'DefaultSdf',
       component: () => import('../templates/default/Index.vue'),
     },
-    {
-      path: '/hello/:j',
-      name: 'HelloSdf',
-      component: () => import('../components/HelloWorld.vue'),
-    },
-    {
-      path: '/hello',
-      name: 'Hello',
-      component: () => import('../components/HelloWorld.vue'),
-    },
   ],
 })
 

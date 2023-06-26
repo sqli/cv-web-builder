@@ -10,21 +10,6 @@ import { decode } from 'url-safe-base64'
 
 const store = useSchema()
 store.updateSchema(schema)
-const route = useRoute()
-
-onMounted(() => {
-  try {
-    if (route.params.j) {
-      const jsonString = Array.isArray(route.params.j)
-        ? route.params.j[0]
-        : route.params.j
-      const jsonSchema = JSON.parse(atob(decode(jsonString)))
-      store.updateData(jsonSchema)
-    }
-  } catch (error: any) {
-    ElMessage.error('CV is corrupted.', error)
-  }
-})
 
 const { formData } = storeToRefs(store)
 

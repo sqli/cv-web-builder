@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { encode } from 'url-safe-base64'
+
+import { onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
+import { decode } from 'url-safe-base64'
 
 import FormSchema from './components/FormSchema.vue'
 import { useSchema } from './stores/schema'
@@ -18,6 +22,23 @@ const { formData } = storeToRefs(store)
 const drawer = ref(false)
 const router = useRouter()
 const route = useRoute()
+
+watch(
+  () => route.params,
+  () => {
+    try {
+      if (route.params.j) {
+        const jsonString = Array.isArray(route.params.j)
+          ? route.params.j[0]
+          : route.params.j
+        const jsonSchema = JSON.parse(atob(decode(jsonString)))
+        store.updateData(jsonSchema)
+      }
+    } catch (error: any) {
+      ElMessage.error('CV is corrupted.', error)
+    }
+  },
+)
 
 const handleCommand = (command: string) => {
   if (route.params.j)
@@ -46,7 +67,7 @@ const print = () => {
       allowTaint: true,
       useCORS: true,
       logging: false,
-    }).then((canvas: any) => {
+    }).then((canvas: HTMLCanvasElement) => {
       const imgWidth = 209.5
       const pageHeight = 297.5
       const imgHeight = (canvas.height * imgWidth) / canvas.width
@@ -108,7 +129,6 @@ const share = () => {
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="Default">Default</el-dropdown-item>
-                <el-dropdown-item command="Hello">Hello</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>

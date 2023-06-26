@@ -15,8 +15,18 @@ const router = createRouter({
     },
     {
       path: '/default/:j',
-      name: 'DefaultSdf',
+      name: 'Defaultj',
       component: () => import('../templates/default/Index.vue'),
+    },
+    {
+      path: '/landing',
+      name: 'Landing',
+      component: () => import('../templates/landing/Index.vue'),
+    },
+    {
+      path: '/landing/:j',
+      name: 'Landingj',
+      component: () => import('../templates/landing/Index.vue'),
     },
   ],
 })

@@ -41,8 +41,7 @@ watch(
 )
 
 const handleCommand = (command: string) => {
-  if (route.params.j)
-    router.push({ name: `${command}Sdf`, params: route.params })
+  if (route.params.j) router.push({ name: `${command}j`, params: route.params })
   else router.push({ name: command })
 }
 
@@ -137,6 +136,7 @@ const share = () => {
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="Default">Default</el-dropdown-item>
+                <el-dropdown-item command="Landing">Landing</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>

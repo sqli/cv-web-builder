@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "title": "Landing page",
+  "description": "Landing page demo form",
+  "ui:order": ["firstName", "LastName", "*", "password"],
+  "properties": {
+    "website": {
+      "type": "string",
+      "title": "Website name",
+      "default": "YOUR WEBSITE"
+    },
+    "titleH1": {
+      "type": "string",
+      "title": "H1 title",
+      "default": "Looking For Inspiration"
+    },
+    "SubtitleH1": {
+      "type": "string",
+      "title": "Text under h1 title",
+      "default": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus odit nihil ullam nesciunt quidem iste, Repellendus odit nihil"
+    },
+    "ctaText": {
+      "title": "Cta text button",
+      "type": "string",
+      "default": "Button name"
+    },
+    "topMainCtaText": {
+      "title": "Top Main Cta text button",
+      "type": "string",
+      "default": "Get Started"
+    },
+    "topMenu": {
+      "type": "array",
+      "title": "Top menu nav",
+      "items": {
+        "title": "Nav item",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": "Home"
+          },
+          "link": {
+            "type": "string",
+            "title": "Destination Link",
+            "default": "#"
+          }
+        }
+      }
+    }
+  }
+}

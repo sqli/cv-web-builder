@@ -50,6 +50,12 @@ const router = useRouter
   <!-- End Landing Page -->
 </template>
 <style lang="scss" scoped>
+:global(#app) {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
 a {
   text-decoration: none;
 }
@@ -58,7 +64,9 @@ ul {
   padding: 0;
   margin: 0;
 }
-
+.landing-page {
+  background-color: white;
+}
 .container {
   padding-left: 15px;
   padding-right: 15px;

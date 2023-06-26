@@ -181,8 +181,11 @@ const share = () => {
       display: none;
     }
   }
+  & ~ main {
+    height: calc(100vw - 118px);
+  }
 }
 main {
-  padding-top: 24px;
+  height: calc(100vw - 38px);
 }
 </style>

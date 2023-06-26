@@ -18,95 +18,97 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 </script>
 
 <template>
-  <article class="page">
-    <div class="page-content">
-      <div class="content">
-        <div class="head">
-          <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
-          <inline-svg :width="300" :src="imgLogo" class="img-logo" />
+  <article class="page-container">
+    <div class="page">
+      <div class="page-content">
+        <div class="content">
+          <div class="head">
+            <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
+            <inline-svg :width="300" :src="imgLogo" class="img-logo" />
+          </div>
+          <section class="tech">
+            <h2>TECHNICAL KNOWLEDGE</h2>
+            <ul>
+              <li
+                v-for="(tech, index) in formData.technicalKnowledge"
+                :key="index"
+              >
+                <template v-if="tech.enhance">
+                  <strong> {{ tech.title }} </strong>
+                </template>
+                <template v-else>
+                  {{ tech.title }}
+                </template>
+              </li>
+            </ul>
+          </section>
+          <section class="roles">
+            <h2>ROLES</h2>
+            <ul>
+              <li v-for="(role, index) in formData.roles" :key="index">
+                {{ role }}
+              </li>
+            </ul>
+          </section>
+          <section v-if="!formData.workExperience?.newPage" class="experience">
+            <h2>WORK EXPERIENCE</h2>
+            <ul>
+              <li
+                v-for="(exp, index) in formData.workExperience?.experience"
+                :key="index"
+              >
+                <strong>{{ exp.timePeriod }}</strong>
+                <span>{{ exp.position }}</span>
+                <p>{{ exp.description }}</p>
+              </li>
+            </ul>
+          </section>
         </div>
-        <section class="tech">
-          <h2>TECHNICAL KNOWLEDGE</h2>
-          <ul>
-            <li
-              v-for="(tech, index) in formData.technicalKnowledge"
-              :key="index"
-            >
-              <template v-if="tech.enhance">
-                <strong> {{ tech.title }} </strong>
-              </template>
-              <template v-else>
-                {{ tech.title }}
-              </template>
-            </li>
-          </ul>
-        </section>
-        <section class="roles">
-          <h2>ROLES</h2>
-          <ul>
-            <li v-for="(role, index) in formData.roles" :key="index">
-              {{ role }}
-            </li>
-          </ul>
-        </section>
-        <section v-if="!formData.workExperience?.newPage" class="experience">
-          <h2>WORK EXPERIENCE</h2>
-          <ul>
-            <li
-              v-for="(exp, index) in formData.workExperience?.experience"
-              :key="index"
-            >
-              <strong>{{ exp.timePeriod }}</strong>
-              <span>{{ exp.position }}</span>
-              <p>{{ exp.description }}</p>
-            </li>
-          </ul>
-        </section>
+        <aside>
+          <picture>
+            <img :src="formData.imageProfile" />
+          </picture>
+          <section>
+            <strong>{{ formData.firstName }} {{ formData.lastName }}</strong>
+            <p>{{ formData.mainPositionRole }}</p>
+            <p>{{ formData.secondaryPositionRole }}</p>
+            <ul class="tags">
+              <li v-for="(tag, index) in formData.hashTags" :key="index">
+                #{{ tag }}
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>CERTIFICATIONS / AWARDS</h2>
+            <ul>
+              <li
+                v-for="(cert, index) in formData.certificationsAwards"
+                :key="index"
+              >
+                <strong>{{ cert.title }}</strong>
+                <p>{{ cert.description }}</p>
+              </li>
+            </ul>
+          </section>
+        </aside>
       </div>
-      <aside>
-        <picture>
-          <img :src="formData.imageProfile" />
-        </picture>
-        <section>
-          <strong>{{ formData.firstName }} {{ formData.lastName }}</strong>
-          <p>{{ formData.mainPositionRole }}</p>
-          <p>{{ formData.secondaryPositionRole }}</p>
-          <ul class="tags">
-            <li v-for="(tag, index) in formData.hashTags" :key="index">
-              #{{ tag }}
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h2>CERTIFICATIONS / AWARDS</h2>
-          <ul>
-            <li
-              v-for="(cert, index) in formData.certificationsAwards"
-              :key="index"
-            >
-              <strong>{{ cert.title }}</strong>
-              <p>{{ cert.description }}</p>
-            </li>
-          </ul>
-        </section>
-      </aside>
-    </div>
 
-    <div v-if="formData.workExperience?.newPage" class="page-content">
-      <div class="content">
-        <section class="experience">
-          <h2>WORK EXPERIENCE</h2>
-          <ul>
-            <li
-              v-for="(exp, index) in formData.workExperience?.experience"
-              :key="index"
-            >
-              <strong>{{ exp.timePeriod }}</strong>
-              <span>{{ exp.position }}</span>
-              <p>{{ exp.description }}</p>
-            </li>
-          </ul>
-        </section>
+      <div v-if="formData.workExperience?.newPage" class="page-content">
+        <div class="content">
+          <section class="experience">
+            <h2>WORK EXPERIENCE</h2>
+            <ul>
+              <li
+                v-for="(exp, index) in formData.workExperience?.experience"
+                :key="index"
+              >
+                <strong>{{ exp.timePeriod }}</strong>
+                <span>{{ exp.position }}</span>
+                <p>{{ exp.description }}</p>
+              </li>
+            </ul>
+          </section>
+        </div>
       </div>
     </div>
   </article>
@@ -119,7 +121,6 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
 
 :global(#app) {
-  background-color: #f4f3f2;
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -140,159 +141,164 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
   @include create-color-variants(--color-error, #df1616);
 }
 
-.page {
-  margin: 0 auto;
-  padding: 0;
-  overflow: hidden;
-  .page-content {
-    display: flex;
-    align-items: stretch;
-    width: 100%;
-    height: 100%;
-    min-height: 29.75cm;
-    font-family: var(--el-font-family);
-    & + .page-content {
-      padding-top: 2rem;
-      .content {
-        width: 100%;
-      }
-    }
-    aside {
-      background-color: var(--color-aside-bg);
-      width: 36%;
-      picture {
-        img {
+.page-container {
+  background-color: #f4f3f2;
+  padding-top: 2rem;
+  min-height: 100%;
+  .page {
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    .page-content {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+      height: 100%;
+      min-height: 29.75cm;
+      font-family: var(--el-font-family);
+      & + .page-content {
+        padding-top: 2rem;
+        .content {
           width: 100%;
         }
       }
-      section {
-        padding: 1rem;
-        h2 {
-          padding-left: 0;
-        }
-        strong,
-        p {
-          color: var(--color-tertiary-500);
-          font-size: 1.3rem;
-          & + p {
-            margin-top: 0;
+      aside {
+        background-color: var(--color-aside-bg);
+        width: 36%;
+        picture {
+          img {
+            width: 100%;
           }
         }
-        ul {
-          margin-top: 1rem;
-          list-style: none;
-          &.tags {
-            li {
-              color: var(--color-secondary-500);
-              font-family: var(--font-family-title);
-              font-weight: 800;
+        section {
+          padding: 1rem;
+          h2 {
+            padding-left: 0;
+          }
+          strong,
+          p {
+            color: var(--color-tertiary-500);
+            font-size: 1.3rem;
+            & + p {
+              margin-top: 0;
             }
           }
-          li {
-            font-size: 1.2rem;
-
-            *:first-letter {
-              text-transform: uppercase;
-            }
-
-            strong {
-              font-size: 1.1rem;
-              display: block;
-            }
-            p {
-              color: var(--color-primary-500);
-              font-size: 1rem;
-              margin-bottom: 1rem;
-            }
-          }
-        }
-      }
-    }
-
-    h2 {
-      color: var(--color-secondary-500);
-      font-family: var(--font-family-title);
-      font-weight: 800;
-      font-size: 1.5rem;
-      padding-bottom: 0.31rem;
-      padding-left: 1rem;
-      margin-bottom: 0.75rem;
-      font-weight: bolder;
-      background-repeat: repeat-x;
-      background-position: 0 100%;
-      background-size: 100% 1px;
-      transition: background-size 0.7s ease-in-out;
-      background-image: linear-gradient(
-        90deg,
-        currentColor 0,
-        var(--color-logo)
-      );
-    }
-    .content {
-      width: 64%;
-      height: 100%;
-      margin-bottom: 1rem;
-      .head {
-        position: relative;
-        height: 6.5cm;
-        .bg-logo {
-          position: absolute;
-          z-index: 0;
-          left: 0;
-          top: 0;
-          width: 6cm !important;
-          opacity: 0.05;
-        }
-        .img-logo {
-          color: var(--color-logo);
-          position: absolute;
-          left: 0;
-          top: 1cm;
-          width: 13cm !important;
-          z-index: 1;
-        }
-      }
-
-      section {
-        margin: 1rem;
-        *:first-letter {
-          text-transform: uppercase;
-        }
-
-        ul {
-          list-style: none;
-          padding-left: 0.5rem;
-          margin-bottom: 2rem;
-          li {
-            padding: 0.25rem 0;
-          }
-        }
-        &.tech {
-          color: var(--color-tertiary-500);
-        }
-        &.roles {
-          color: var(--color-primary-500);
-        }
-        &.experience {
           ul {
-            padding-left: 2rem;
-            li {
-              margin: 0.5rem 0;
-              strong {
+            margin-top: 1rem;
+            list-style: none;
+            &.tags {
+              li {
                 color: var(--color-secondary-500);
-                font-size: 1.1rem;
                 font-family: var(--font-family-title);
                 font-weight: 800;
               }
-              span {
-                margin: 0.3rem 0;
+            }
+            li {
+              font-size: 1.2rem;
+
+              *:first-letter {
+                text-transform: uppercase;
+              }
+
+              strong {
+                font-size: 1.1rem;
                 display: block;
-                color: var(--color-tertiary-500);
-                font-size: 1.3rem;
-                font-weight: bolder;
               }
               p {
-                padding-left: 2rem;
+                color: var(--color-primary-500);
+                font-size: 1rem;
+                margin-bottom: 1rem;
+              }
+            }
+          }
+        }
+      }
+
+      h2 {
+        color: var(--color-secondary-500);
+        font-family: var(--font-family-title);
+        font-weight: 800;
+        font-size: 1.5rem;
+        padding-bottom: 0.31rem;
+        padding-left: 1rem;
+        margin-bottom: 0.75rem;
+        font-weight: bolder;
+        background-repeat: repeat-x;
+        background-position: 0 100%;
+        background-size: 100% 1px;
+        transition: background-size 0.7s ease-in-out;
+        background-image: linear-gradient(
+          90deg,
+          currentColor 0,
+          var(--color-logo)
+        );
+      }
+      .content {
+        width: 64%;
+        height: 100%;
+        margin-bottom: 1rem;
+        .head {
+          position: relative;
+          height: 6.5cm;
+          .bg-logo {
+            position: absolute;
+            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 6cm !important;
+            opacity: 0.05;
+          }
+          .img-logo {
+            color: var(--color-logo);
+            position: absolute;
+            left: 0;
+            top: 1cm;
+            width: 13cm !important;
+            z-index: 1;
+          }
+        }
+
+        section {
+          margin: 1rem;
+          *:first-letter {
+            text-transform: uppercase;
+          }
+
+          ul {
+            list-style: none;
+            padding-left: 0.5rem;
+            margin-bottom: 2rem;
+            li {
+              padding: 0.25rem 0;
+            }
+          }
+          &.tech {
+            color: var(--color-tertiary-500);
+          }
+          &.roles {
+            color: var(--color-primary-500);
+          }
+          &.experience {
+            ul {
+              padding-left: 2rem;
+              li {
+                margin: 0.5rem 0;
+                strong {
+                  color: var(--color-secondary-500);
+                  font-size: 1.1rem;
+                  font-family: var(--font-family-title);
+                  font-weight: 800;
+                }
+                span {
+                  margin: 0.3rem 0;
+                  display: block;
+                  color: var(--color-tertiary-500);
+                  font-size: 1.3rem;
+                  font-weight: bolder;
+                }
+                p {
+                  padding-left: 2rem;
+                }
               }
             }
           }

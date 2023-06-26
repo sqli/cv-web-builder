@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 set -env
-npm run build
+npm run build-pages
 cd dist
 git init
-git add -addgit commit -m 'New Deployment'
-# git push -f 
+git add -A
+git commit -m 'deploy'
+cd -

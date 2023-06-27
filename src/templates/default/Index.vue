@@ -143,8 +143,8 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 
 .page-container {
   background-color: #f4f3f2;
-  padding-top: 2rem;
-  min-height: 100%;
+  padding: 2rem 0;
+  min-height: inherit;
   .page {
     margin: 0 auto;
     padding: 0;

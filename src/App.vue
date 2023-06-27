@@ -182,10 +182,10 @@ const share = () => {
     }
   }
   & ~ main {
-    height: calc(100vw - 118px);
+    min-height: calc(100vh - 81px);
   }
 }
 main {
-  height: calc(100vw - 38px);
+  min-height: 100vh;
 }
 </style>

@@ -34,9 +34,9 @@ const router = useRouter
     <div class="content">
       <div class="container">
         <div class="info">
-          <h1>{{ titleH1 }}</h1>
-          <p>{{ SubtitleH1 }}</p>
-          <button>{{ ctaText }}</button>
+          <h1>{{ formData.titleH1 }}</h1>
+          <p>{{ formData.SubtitleH1 }}</p>
+          <button>{{ formData.ctaText }}</button>
         </div>
         <div class="image">
           <img src="https://i.postimg.cc/65QxYYzh/001234.png" />

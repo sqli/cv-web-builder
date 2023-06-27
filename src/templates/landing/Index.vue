@@ -17,6 +17,7 @@ const router = useRouter
 
 <template>
   <!-- Start Landing Page -->
+  <pre>{{ formData }}</pre>
   <div class="landing-page">
     <header>
       <div class="container">
@@ -34,12 +35,9 @@ const router = useRouter
     <div class="content">
       <div class="container">
         <div class="info">
-          <h1>Looking For Inspiration</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-            odit nihil ullam nesciunt quidem iste, Repellendus odit nihil
-          </p>
-          <button>Button name</button>
+          <h1>{{ titleH1 }}</h1>
+          <p>{{ SubtitleH1 }}</p>
+          <button>{{ ctaText }}</button>
         </div>
         <div class="image">
           <img src="https://i.postimg.cc/65QxYYzh/001234.png" />

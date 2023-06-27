@@ -121,10 +121,6 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
 
 :global(#app) {
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-
   --color-black: black;
   --color-white: white;
   --color-logo: #9fddd2;

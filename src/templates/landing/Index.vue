@@ -17,7 +17,6 @@ const router = useRouter
 
 <template>
   <!-- Start Landing Page -->
-  <pre>{{ formData }}</pre>
   <div class="landing-page">
     <header>
       <div class="container">

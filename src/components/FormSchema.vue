@@ -27,7 +27,7 @@ const SaveUrlForm = async () => {
   )
   if (formData.value && imageUploaded) {
     router.push({
-      name: `DefaultSdf`,
+      name: `Defaultj`,
       params: { j: `${encode(btoa(JSON.stringify(formData.value)))}` },
     })
   }

@@ -6,6 +6,7 @@ import { encode } from 'url-safe-base64'
 
 import { onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import { h } from 'vue'
 import { decode } from 'url-safe-base64'
 
 import FormSchema from './components/FormSchema.vue'
@@ -113,6 +114,12 @@ const share = () => {
   }, '')
   path += encode(btoa(JSON.stringify(formDatatemp)))
   navigator.clipboard.writeText(path)
+  ElMessage({
+    message: h('p', null, [
+      h('span', null, 'The read only share link is now '),
+      h('span', { style: 'color: teal' }, 'copied to the clipboard'),
+    ]),
+  })
 }
 </script>
 

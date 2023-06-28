@@ -2,30 +2,23 @@
   "type": "object",
   "title": "Personal Data",
   "description": "Please, add your data",
-  "ui:order": ["firstName", "LastName", "*", "password"],
+  "ui:order": ["firstName", "LastName", "*"],
   "properties": {
     "firstName": {
       "type": "string",
-      "title": "First name",
-      "default": ""
+      "title": "First name"
     },
     "lastName": {
       "type": "string",
-      "title": "Last name",
-      "ui:options": {
-        "description": "Add all your last name"
-      },
-      "err:required": "Last Name required"
+      "title": "Last name"
     },
     "mainPositionRole": {
       "type": "string",
-      "title": "Main Role Position Title",
-      "default": ""
+      "title": "Main Role Position Title"
     },
     "secondaryPositionRole": {
       "title": "Secondary Position Role Title",
-      "type": "string",
-      "default": ""
+      "type": "string"
     },
     "technicalKnowledge": {
       "type": "array",
@@ -81,19 +74,6 @@
             "type": "string",
             "title": "Description",
             "default": ""
-          }
-        }
-      }
-    },
-    "aboutYou": {
-      "type": "object",
-      "title": "About you",
-      "properties": {
-        "textarea": {
-          "type": "string",
-          "title": "this textarea will support markdown",
-          "ui:options": {
-            "type": "textarea"
           }
         }
       }

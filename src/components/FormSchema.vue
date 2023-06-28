@@ -126,6 +126,7 @@ const loadNewImageAsB64 = async (
   </div>
 
   <el-upload
+    v-if="store.settings.imageUpload"
     v-loading="loadingImage"
     :before-upload="handleFileSelect"
     class="upload-demo"
@@ -139,7 +140,7 @@ const loadNewImageAsB64 = async (
     :form-footer="formFooter"
   >
   </VueForm>
-  <el-button type="primary" @click="SaveUrlForm">Save CV in URL</el-button>
+  <el-button type="primary" @click="SaveUrlForm">Save Page in URL</el-button>
 </template>
 
 <style lang="scss" scoped>

@@ -10,6 +10,7 @@ import { decode } from 'url-safe-base64'
 
 const store = useSchema()
 store.updateSchema(schema)
+store.upddateSettings({ exportPdf: false, imageUpload: false })
 
 const { formData } = storeToRefs(store)
 const router = useRouter

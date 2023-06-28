@@ -1,10 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import type { Settings } from '../types/common/settings'
 
 export const useSchema = defineStore('schema', {
   state: () => ({
     formSchema: ref({} as any),
     formData: ref({} as any),
+    settings: ref({} as Settings),
   }),
   actions: {
     updateImage(base64Img: string) {
@@ -15,6 +17,9 @@ export const useSchema = defineStore('schema', {
     },
     updateSchema(schema: any) {
       this.formSchema = schema
+    },
+    upddateSettings(settings: Settings) {
+      this.settings = settings
     },
   },
 })

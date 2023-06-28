@@ -4,10 +4,12 @@ import VueForm from '@lljj/vue3-form-element'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../stores/schema'
 import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { encode } from 'url-safe-base64'
 
 const router = useRouter()
+const route = useRoute()
 const store = useSchema()
 const { formData, formSchema } = storeToRefs(store)
 const formFooter = {
@@ -27,7 +29,6 @@ const SaveUrlForm = async () => {
   )
   if (formData.value && imageUploaded) {
     router.push({
-      name: `Defaultj`,
       params: { j: `${encode(btoa(JSON.stringify(formData.value)))}` },
     })
   }
@@ -53,14 +54,16 @@ const loadNewImageAsB64 = async (
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
   const img = new Image()
+  if (!event) return true
   if (typeof event === 'string') {
     img.src = event
   } else {
-    img.src = event.target?.result as string
+    img.src = event?.target?.result as string
   }
+
   return await new Promise((resolve) => {
     img.onload = function () {
-      const imageResolution = 600
+      const imageResolution = 300
 
       const aspectRatio = img.width / img.height
       let targetWidth = img.width

@@ -4,7 +4,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { encode } from 'url-safe-base64'
 
-import { onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { decode } from 'url-safe-base64'
 
@@ -140,7 +139,7 @@ const share = () => {
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-button type="info" @click="share">Share CV</el-button>
+          <el-button type="info" @click="share">Share page</el-button>
           <el-button @click="print">Export to PDF</el-button>
           <el-button type="primary" class="ml-2" @click="drawer = true"
             >Edit</el-button

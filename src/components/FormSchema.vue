@@ -19,6 +19,10 @@ const formFooter = {
 const loadingImage = ref(false)
 const loadingForm = ref(false)
 
+const clear = () => {
+  formData.value = {}
+}
+
 const SaveUrlForm = async () => {
   loadingForm.value = true
   const imageUploaded = await loadNewImageAsB64(
@@ -141,6 +145,7 @@ const loadNewImageAsB64 = async (
   >
   </VueForm>
   <el-button type="primary" @click="SaveUrlForm">Save Page in URL</el-button>
+  <el-button type="secondary" @click="clear">Clear data</el-button>
 </template>
 
 <style lang="scss" scoped>

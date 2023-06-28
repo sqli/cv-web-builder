@@ -28,7 +28,10 @@ const SaveUrlForm = async () => {
     0.9,
   )
   if (formData.value && imageUploaded) {
+    let urlNeedsJName = (route.name as string).slice(-1) !== 'j' ? 'j' : ''
+
     router.push({
+      name: (route.name as string) + urlNeedsJName,
       params: { j: `${encode(btoa(JSON.stringify(formData.value)))}` },
     })
   }
@@ -143,7 +146,7 @@ const loadNewImageAsB64 = async (
     :form-footer="formFooter"
   >
   </VueForm>
-  <el-button type="primary" @click="SaveUrlForm">Save Page in URL</el-button>
+  <el-button type="primary" @click="SaveUrlForm">Save CV in URL</el-button>
 </template>
 
 <style lang="scss" scoped>

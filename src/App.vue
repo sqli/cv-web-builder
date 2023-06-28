@@ -140,7 +140,9 @@ const share = () => {
             </template>
           </el-dropdown>
           <el-button type="info" @click="share">Share page</el-button>
-          <el-button @click="print">Export to PDF</el-button>
+          <el-button v-if="store.settings.exportPdf" @click="print"
+            >Export to PDF</el-button
+          >
           <el-button type="primary" class="ml-2" @click="drawer = true"
             >Edit</el-button
           >

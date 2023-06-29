@@ -98,9 +98,10 @@ const print = () => {
 
 const share = () => {
   let formDatatemp = { ...formData.value, readOnly: true }
+  console.log((router.currentRoute.value as any).href)
   let path =
     window.location.origin +
-    router.currentRoute.value.href +
+    router.currentRoute.value.fullPath +
     '/' +
     encode(btoa(JSON.stringify(formDatatemp)))
   navigator.clipboard.writeText(path)
@@ -138,13 +139,13 @@ const saveCVInCookies = () => {
   })
 }
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname: string, cvalue: string, exdays: number) {
   const d = new Date()
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
   let expires = 'expires=' + d.toUTCString()
   document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
 }
-function getCookie(cname) {
+function getCookie(cname: string) {
   let name = cname + '='
   let decodedCookie = decodeURIComponent(document.cookie)
   let ca = decodedCookie.split(';')

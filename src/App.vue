@@ -4,7 +4,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { encode } from 'url-safe-base64'
 
-import { onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { h } from 'vue'
 import { decode } from 'url-safe-base64'

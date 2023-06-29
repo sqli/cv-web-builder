@@ -4,10 +4,12 @@ import VueForm from '@lljj/vue3-form-element'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../stores/schema'
 import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { encode } from 'url-safe-base64'
 
 const router = useRouter()
+const route = useRoute()
 const store = useSchema()
 const { formData, formSchema } = storeToRefs(store)
 const formFooter = {
@@ -30,8 +32,10 @@ const SaveUrlForm = async () => {
     0.9,
   )
   if (formData.value && imageUploaded) {
+    let urlNeedsJName = (route.name as string).slice(-1) !== 'j' ? 'j' : ''
+
     router.push({
-      name: `Defaultj`,
+      name: (route.name as string) + urlNeedsJName,
       params: { j: `${encode(btoa(JSON.stringify(formData.value)))}` },
     })
   }
@@ -57,14 +61,16 @@ const loadNewImageAsB64 = async (
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
   const img = new Image()
+  if (!event) return true
   if (typeof event === 'string') {
     img.src = event
   } else {
-    img.src = event.target?.result as string
+    img.src = event?.target?.result as string
   }
+
   return await new Promise((resolve) => {
     img.onload = function () {
-      const imageResolution = 600
+      const imageResolution = 300
 
       const aspectRatio = img.width / img.height
       let targetWidth = img.width
@@ -145,7 +151,7 @@ const loadNewImageAsB64 = async (
   >
   </VueForm>
   <el-button type="primary" @click="SaveUrlForm">Save Page in URL</el-button>
-  <el-button type="secondary" @click="clear">Clear data</el-button>
+  <el-button @click="clear">Clear data</el-button>
 </template>
 
 <style lang="scss" scoped>

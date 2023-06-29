@@ -4,7 +4,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { encode } from 'url-safe-base64'
 
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { h } from 'vue'
 import { decode } from 'url-safe-base64'
 
@@ -18,7 +18,6 @@ const store = useSchema()
 const { formData } = storeToRefs(store)
 
 // aqui pillariamos el data de la url
-
 const drawer = ref(false)
 const router = useRouter()
 const route = useRoute()
@@ -99,19 +98,11 @@ const print = () => {
 
 const share = () => {
   let formDatatemp = { ...formData.value, readOnly: true }
-
-  const pathSinParams = window.location.pathname.split('/')
-  let path = window.location.origin + '/'
-  path += pathSinParams.reduce((accumulator, currentValue, currentIndex) => {
-    if (currentIndex !== 0 && currentIndex < pathSinParams.length - 1) {
-      return !accumulator
-        ? currentValue + '/'
-        : accumulator + currentValue + '/'
-    } else {
-      return accumulator || ''
-    }
-  }, '')
-  path += encode(btoa(JSON.stringify(formDatatemp)))
+  let path =
+    window.location.origin +
+    router.currentRoute.value.href +
+    '/' +
+    encode(btoa(JSON.stringify(formDatatemp)))
   navigator.clipboard.writeText(path)
   ElMessage({
     message: h('p', null, [
@@ -119,6 +110,54 @@ const share = () => {
       h('span', { style: 'color: teal' }, 'copied to the clipboard'),
     ]),
   })
+}
+
+const loadCVInCookies = () => {
+  if (getCookie('CV') === '') {
+    ElMessage.error('CV not found')
+    return
+  }
+  const jsonSchema = JSON.parse(atob(decode(getCookie('CV'))))
+  store.updateData(jsonSchema)
+}
+
+const saveCVInCookies = () => {
+  ElMessageBox.confirm(
+    'Save is going to overwrite the last CV. Save anyway?',
+    'Warning',
+    {
+      confirmButtonText: 'Save',
+      cancelButtonText: 'Cancel',
+    },
+  ).then(() => {
+    ElMessage({
+      type: 'success',
+      message: 'completed',
+    })
+    setCookie('CV', encode(btoa(JSON.stringify(formData.value))), 365)
+  })
+}
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date()
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
+  let expires = 'expires=' + d.toUTCString()
+  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
+}
+function getCookie(cname) {
+  let name = cname + '='
+  let decodedCookie = decodeURIComponent(document.cookie)
+  let ca = decodedCookie.split(';')
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i]
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1)
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length)
+    }
+  }
+  return ''
 }
 </script>
 
@@ -147,6 +186,12 @@ const share = () => {
             </template>
           </el-dropdown>
           <el-button type="info" @click="share">Share page</el-button>
+          <el-button type="success" @click="loadCVInCookies"
+            >load page</el-button
+          >
+          <el-button type="success" @click="saveCVInCookies"
+            >save page</el-button
+          >
           <el-button v-if="store.settings.exportPdf" @click="print"
             >Export to PDF</el-button
           >

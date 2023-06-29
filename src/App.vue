@@ -98,10 +98,9 @@ const print = () => {
 
 const share = () => {
   let formDatatemp = { ...formData.value, readOnly: true }
-  console.log((router.currentRoute.value as any).href)
   let path =
     window.location.origin +
-    router.currentRoute.value.fullPath +
+    router.currentRoute.value.href +
     '/' +
     encode(btoa(JSON.stringify(formDatatemp)))
   navigator.clipboard.writeText(path)

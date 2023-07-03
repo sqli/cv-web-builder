@@ -186,12 +186,14 @@ function getCookie(cname: string) {
             </template>
           </el-dropdown>
           <el-button type="info" @click="share">Share page</el-button>
-          <el-button type="success" @click="loadCVInCookies"
+          <!--
+            <el-button type="success" @click="loadCVInCookies"
             >load page</el-button
           >
           <el-button type="success" @click="saveCVInCookies"
             >save page</el-button
           >
+          -->
           <el-button v-if="store.settings.exportPdf" @click="print"
             >Export to PDF</el-button
           >

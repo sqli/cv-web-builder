@@ -43,24 +43,32 @@
     "roles": {
       "type": "array",
       "title": "Roles",
+      "minItems": 0,
+      "maxItems": 5,
       "items": {
         "title": "Role title",
         "type": "string",
-        "default": ""
+        "err:required": "Role is required"
       }
     },
     "hashTags": {
       "type": "array",
       "title": "Knowledge Tags",
+      "minItems": 0,
+      "maxItems": 5,
       "items": {
         "title": "Tag",
         "type": "string",
-        "default": "Developer"
+        "message": {
+          "err:required": "Tag name is required"
+        }
       }
     },
     "certificationsAwards": {
       "type": "array",
       "title": "Certifications / Awards",
+      "minItems": 0,
+      "maxItems": 5,
       "items": {
         "title": "Knowledge",
         "type": "object",

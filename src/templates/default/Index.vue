@@ -28,7 +28,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
             <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
             <inline-svg :width="300" :src="imgLogo" class="img-logo" />
           </div>
-          <section v-if="formData.technicalKnowledge.length" class="tech">
+          <section v-if="formData.technicalKnowledge?.length" class="tech">
             <h2>TECHNICAL KNOWLEDGE</h2>
             <ul>
               <li
@@ -44,7 +44,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               </li>
             </ul>
           </section>
-          <section v-if="formData.roles.length" class="roles">
+          <section v-if="formData.roles?.length" class="roles">
             <h2>ROLES</h2>
             <ul>
               <li v-for="(role, index) in formData.roles" :key="index">
@@ -55,7 +55,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
           <section
             v-if="
               !formData.workExperience?.newPage &&
-              formData.workExperience?.experience.length
+              formData.workExperience?.experience?.length
             "
             class="experience"
           >
@@ -88,7 +88,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               </li>
             </ul>
           </section>
-          <section v-if="formData.certificationsAwards.length">
+          <section v-if="formData.certificationsAwards?.length">
             <h2>CERTIFICATIONS / AWARDS</h2>
             <ul>
               <li
@@ -106,7 +106,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
       <div
         v-if="
           formData.workExperience?.newPage &&
-          formData.workExperience?.experience.length
+          formData.workExperience?.experience?.length
         "
         class="page-content"
       >

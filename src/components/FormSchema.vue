@@ -27,16 +27,21 @@ const clear = () => {
 
 const SaveUrlForm = async () => {
   loadingForm.value = true
-  const imageUploaded = await loadNewImageAsB64(
-    formData.value.imageProfile,
-    0.9,
-  )
-  if (formData.value && imageUploaded) {
+
+  let formToBeSaved = Object.assign({}, formData.value)
+
+  if (formToBeSaved.anonymous) {
+    formToBeSaved.firstName = ''
+    formToBeSaved.lastName = ''
+  }
+
+  const imageUploaded = await loadNewImageAsB64(formToBeSaved.imageProfile, 0.9)
+  if (formToBeSaved && imageUploaded) {
     let urlNeedsJName = (route.name as string).slice(-1) !== 'j' ? 'j' : ''
 
     router.push({
       name: (route.name as string) + urlNeedsJName,
-      params: { j: `${encode(btoa(JSON.stringify(formData.value)))}` },
+      params: { j: `${encode(btoa(JSON.stringify(formToBeSaved)))}` },
     })
   }
   loadingForm.value = false

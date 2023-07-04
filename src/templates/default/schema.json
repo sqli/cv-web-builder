@@ -2,15 +2,21 @@
   "type": "object",
   "title": "Personal Data",
   "description": "Please, add your data",
-  "ui:order": ["firstName", "LastName", "*"],
+  "ui:order": ["anonymous", "firstName", "LastName", "*"],
   "properties": {
+    "anonymous": {
+      "type": "boolean",
+      "title": "Anonymous"
+    },
     "firstName": {
       "type": "string",
-      "title": "First name"
+      "title": "First name",
+      "ui:hidden": "{{rootFormData.anonymous === true}}"
     },
     "lastName": {
       "type": "string",
-      "title": "Last name"
+      "title": "Last name",
+      "ui:hidden": "{{rootFormData.anonymous === true}}"
     },
     "mainPositionRole": {
       "type": "string",
@@ -117,7 +123,11 @@
               "description": {
                 "type": "string",
                 "title": "Description",
-                "default": ""
+                "default": "",
+                "ui:options": {
+                  "type": "textarea",
+                  "rows": 6
+                }
               }
             }
           }

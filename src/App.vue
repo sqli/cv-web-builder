@@ -14,6 +14,20 @@ import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { ElLoading } from 'element-plus'
 
+import { onBeforeUnmount, onMounted } from 'vue'
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', confirmClose)
+})
+onMounted(() => {
+  window.addEventListener('beforeunload', confirmClose)
+})
+const confirmClose = (event) => {
+  event.preventDefault()
+  event.returnValue = ''
+  return '¿Estás seguro de que deseas salir? Los cambios no guardados se perderán.' // confirmation message, doesnt work in all browsers
+}
+
 const store = useSchema()
 const { formData } = storeToRefs(store)
 

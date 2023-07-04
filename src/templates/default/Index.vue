@@ -19,6 +19,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 </script>
 
 <template>
+  <pre>{{ formData }}</pre>
   <article class="page-container">
     <div class="page">
       <div class="page-content">
@@ -27,7 +28,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
             <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
             <inline-svg :width="300" :src="imgLogo" class="img-logo" />
           </div>
-          <section class="tech">
+          <section v-if="formData.technicalKnowledge.length" class="tech">
             <h2>TECHNICAL KNOWLEDGE</h2>
             <ul>
               <li
@@ -43,7 +44,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               </li>
             </ul>
           </section>
-          <section class="roles">
+          <section v-if="formData.roles.length" class="roles">
             <h2>ROLES</h2>
             <ul>
               <li v-for="(role, index) in formData.roles" :key="index">
@@ -51,7 +52,13 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               </li>
             </ul>
           </section>
-          <section v-if="!formData.workExperience?.newPage" class="experience">
+          <section
+            v-if="
+              !formData.workExperience?.newPage &&
+              formData.workExperience?.experience.length
+            "
+            class="experience"
+          >
             <h2>WORK EXPERIENCE</h2>
             <ul>
               <li
@@ -66,11 +73,13 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
           </section>
         </div>
         <aside>
-          <picture>
+          <picture v-if="formData.imageProfile">
             <img :src="formData.imageProfile" />
           </picture>
           <section>
-            <strong>{{ formData.firstName }} {{ formData.lastName }}</strong>
+            <strong v-if="!formData.anonymous"
+              >{{ formData.firstName }} {{ formData.lastName }}</strong
+            >
             <p>{{ formData.mainPositionRole }}</p>
             <p>{{ formData.secondaryPositionRole }}</p>
             <ul class="tags">
@@ -79,7 +88,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               </li>
             </ul>
           </section>
-          <section>
+          <section v-if="formData.certificationsAwards.length">
             <h2>CERTIFICATIONS / AWARDS</h2>
             <ul>
               <li
@@ -94,7 +103,13 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
         </aside>
       </div>
 
-      <div v-if="formData.workExperience?.newPage" class="page-content">
+      <div
+        v-if="
+          formData.workExperience?.newPage &&
+          formData.workExperience?.experience.length
+        "
+        class="page-content"
+      >
         <div class="content">
           <section class="experience">
             <h2>WORK EXPERIENCE</h2>
@@ -295,6 +310,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
                 }
                 p {
                   padding-left: 2rem;
+                  white-space: pre;
                 }
               }
             }

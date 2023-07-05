@@ -47,15 +47,6 @@ const SaveUrlForm = async () => {
 </script>
 
 <template>
-  <div
-    class="el-form el-form--default el-form--label-top genFromComponent layoutColumn layoutColumn-1"
-  >
-    <div class="fieldGroupWrap objectField fieldItem __pathRoot">
-      <h3 class="fieldGroupWrap_title">CV Data form</h3>
-      <p class="fieldGroupWrap_des">Please add your picture</p>
-    </div>
-  </div>
-
   <VueForm
     v-model="formData"
     v-loading="loadingForm"

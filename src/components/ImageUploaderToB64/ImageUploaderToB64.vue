@@ -14,8 +14,12 @@ formData.value.temporal = formData.value.temporal ? formData.value.temporal : {}
 const croppedImage = ref(null)
 const props = defineProps({
   id: String,
+  imageHeight: Number,
+  imageWidth: Number,
+  characterLimit: Number,
 })
 
+console.log(props.id, props.imageHeight, props.imageWidth, props.characterLimit)
 const handleFileSelect = (file: File) => {
   if (file) {
     const reader = new FileReader()
@@ -42,35 +46,19 @@ const loadNewImageAsB64 = async (
   }
 
   img.onload = function () {
-    const imageResolution = 300
-
-    const aspectRatio = img.width / img.height
-    let targetWidth = img.width
-    let targetHeight = img.height
-    let offsetX = 0
-    let offsetY = 0
-
-    if (aspectRatio > 1) {
-      targetWidth = img.height
-      offsetX = (img.width - targetWidth) / 2
-    } else if (aspectRatio < 1) {
-      targetHeight = img.width
-      offsetY = (img.height - targetHeight) / 2
-    }
-
-    canvas.width = imageResolution
-    canvas.height = imageResolution
+    canvas.width = props.imageWidth
+    canvas.height = (img.height * props.imageWidth) / img.width
 
     context!.drawImage(
       img,
-      offsetX,
-      offsetY,
-      targetWidth,
-      targetHeight,
       0,
       0,
-      imageResolution,
-      imageResolution,
+      img.width,
+      img.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
     )
 
     const dataURL = canvas.toDataURL('image/webp', qualityImage)
@@ -98,7 +86,7 @@ const compressImage = async (qualityImage) => {
   )
   console.log(imageCompressed.length)
   return await new Promise((resolve) => {
-    if (encode(btoa(imageCompressed)).length < 5000) {
+    if (encode(btoa(imageCompressed)).length < props.characterLimit) {
       store.updateImage(imageCompressed)
       resolve(true)
     } else {
@@ -127,6 +115,10 @@ const compressImage = async (qualityImage) => {
       :src="imageComputed"
       :stencil-props="{
         aspectRatio: 1,
+      }"
+      :stencil-size="{
+        width: props.imageWidth,
+        height: props.imageHeight,
       }"
       @change="change"
     />

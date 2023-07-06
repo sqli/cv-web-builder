@@ -1,27 +1,22 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { Cropper, CircleStencil } from 'vue-advanced-cropper'
+import { ref } from 'vue'
+import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
-import { storeToRefs } from 'pinia'
 import { useSchema } from '../../stores/schema'
 import { ElMessage } from 'element-plus'
 import { encode } from 'url-safe-base64'
 
 const store = useSchema()
-const { formData } = storeToRefs(store)
 const croppedImage = ref(null)
+const compressingImage = ref(false)
+
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   id: String,
   imageHeight: Number,
   imageWidth: Number,
   characterLimit: Number,
 })
-
-formData.value.temporal = formData.value.temporal ? formData.value.temporal : {}
-
-formData.value.temporal[props.id] = {
-  originalImage: '',
-}
 
 const uploadedImage = ref(null)
 
@@ -36,21 +31,14 @@ const change = ({ canvas }) => {
 }
 const finalizar = () => {
   compressImage(0.7)
-  formData.value.temporal[props.id] = {
-    originalImage: '',
-  }
 }
 const compressImage = async (qualityImage) => {
-  formData.value.temporal[props.id].originalImage = ''
-
+  compressingImage.value = true
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
   const img = new Image()
   img.src = croppedImage.value.toDataURL()
   img.onload = async function () {
-    formData.value.temporal[props.id] = {
-      originalImage: img.src,
-    }
     canvas.width = props.imageWidth
     canvas.height = (img.height * props.imageWidth) / img.width
     context!.drawImage(
@@ -67,12 +55,14 @@ const compressImage = async (qualityImage) => {
     const imageCompressed = canvas.toDataURL('image/webp', qualityImage)
     return await new Promise((resolve) => {
       if (encode(btoa(imageCompressed)).length < props.characterLimit) {
-        store.updateImage(imageCompressed)
+        emit('update:modelValue', imageCompressed)
+        compressingImage.value = false
         resolve(true)
       } else {
         if (qualityImage < 0) {
-          store.updateImage('')
+          emit('update:modelValue', '')
           ElMessage.error('size of CV too big for sharing by URL.')
+          compressingImage.value = false
           resolve(false)
         } else {
           resolve(compressImage(qualityImage - 0.01))
@@ -84,7 +74,7 @@ const compressImage = async (qualityImage) => {
 </script>
 
 <template>
-  <div class="image-uploader-tob64">
+  <div v-loading="compressingImage" class="image-uploader-tob64">
     <el-upload
       v-if="store.settings.imageUpload"
       :before-upload="handleFileSelect"
@@ -108,21 +98,17 @@ const compressImage = async (qualityImage) => {
       image-restriction="stencil"
       @change="change"
     />
-    <el-button v-if="uploadedImage" @click="finalizar">
-      Actualizar imagen</el-button
-    >
+    <el-button v-if="uploadedImage" @click="finalizar"> Crop image</el-button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-#fileInput {
-  margin-bottom: 1rem;
-}
 .image-uploader-tob64 {
   max-width: 100%;
 }
 .upload-example-cropper {
   max-width: 100%;
   max-height: 500px;
+  margin: 1rem 0;
 }
 </style>

@@ -82,6 +82,7 @@
         }
       }
     },
+    
     "certificationsAwards": {
       "type": "array",
       "title": "Certifications / Awards",

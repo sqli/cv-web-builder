@@ -38,6 +38,44 @@
       "title": "Secondary Position Role Title",
       "type": "string"
     },
+
+    "hashTags": {
+      "type": "array",
+      "title": "Knowledge Tags",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "title": "Tag",
+        "type": "string",
+        "message": {
+          "err:required": "Tag name is required"
+        }
+      }
+    },
+    
+    "certificationsAwards": {
+      "type": "array",
+      "title": "Certifications / Awards",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "title": "Knowledge",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          }
+        }
+      }
+    },
+    
     "technicalKnowledge": {
       "type": "array",
       "title": "Technical Knowledge",
@@ -67,41 +105,6 @@
         "title": "Role title",
         "type": "string",
         "err:required": "Role is required"
-      }
-    },
-    "hashTags": {
-      "type": "array",
-      "title": "Knowledge Tags",
-      "minItems": 0,
-      "maxItems": 5,
-      "items": {
-        "title": "Tag",
-        "type": "string",
-        "message": {
-          "err:required": "Tag name is required"
-        }
-      }
-    },
-    "certificationsAwards": {
-      "type": "array",
-      "title": "Certifications / Awards",
-      "minItems": 0,
-      "maxItems": 5,
-      "items": {
-        "title": "Knowledge",
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title",
-            "default": ""
-          },
-          "description": {
-            "type": "string",
-            "title": "Description",
-            "default": ""
-          }
-        }
       }
     },
     "workExperience": {

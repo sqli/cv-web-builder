@@ -32,6 +32,7 @@ const SaveUrlForm = async () => {
   if (formToBeSaved.anonymous) {
     formToBeSaved.firstName = ''
     formToBeSaved.lastName = ''
+    formToBeSaved.imageProfile = ''
   }
 
   if (formToBeSaved) {

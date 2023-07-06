@@ -169,7 +169,7 @@ const hasParam = computed(() => {
           <el-button type="info" @click="share" v-if="hasParam"
             >Share page</el-button
           >
-          <el-button v-if="store.settings.exportPdf" @click="print"
+          <el-button v-if="store.settings.exportPdf && hasParam" @click="print"
             >Export to PDF</el-button
           >
           <el-button type="primary" class="ml-2" @click="drawer = true"

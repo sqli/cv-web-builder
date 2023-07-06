@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { encode } from 'url-safe-base64'
@@ -125,54 +125,17 @@ const share = () => {
     ]),
   })
 }
-
-const loadCVInCookies = () => {
-  if (getCookie('CV') === '') {
-    ElMessage.error('CV not found')
-    return
-  }
-  const jsonSchema = JSON.parse(atob(decode(getCookie('CV'))))
-  store.updateData(jsonSchema)
-}
-
-const saveCVInCookies = () => {
-  ElMessageBox.confirm(
-    'Save is going to overwrite the last CV. Save anyway?',
-    'Warning',
-    {
-      confirmButtonText: 'Save',
-      cancelButtonText: 'Cancel',
-    },
-  ).then(() => {
-    ElMessage({
-      type: 'success',
-      message: 'completed',
-    })
-    setCookie('CV', encode(btoa(JSON.stringify(formData.value))), 365)
-  })
-}
-
-function setCookie(cname: string, cvalue: string, exdays: number) {
-  const d = new Date()
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
-  let expires = 'expires=' + d.toUTCString()
-  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
-}
-function getCookie(cname: string) {
-  let name = cname + '='
-  let decodedCookie = decodeURIComponent(document.cookie)
-  let ca = decodedCookie.split(';')
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i]
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1)
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length)
-    }
-  }
-  return ''
-}
+const expired = computed(() => {
+  const expirationDate = new Date(formData.value.expiresOn)
+  const dateToday = new Date()
+  console.log(formData.value)
+  console.log('formData.value.expiresOn', formData.value.expiresOn)
+  console.log('dateToday', dateToday)
+  console.log('expirationDate', expirationDate)
+  return (
+    typeof formData.value.expiresOn === 'string' && dateToday < expirationDate
+  )
+})
 </script>
 
 <template>
@@ -218,11 +181,12 @@ function getCookie(cname: string) {
       </div>
     </div>
   </el-affix>
-
   <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
     <form-schema></form-schema>
   </el-drawer>
-  <main><RouterView /></main>
+  {{ formData.readOnly }}
+  {{ expired }}
+  <main v-if="!(formData.readOnly && expired)"><RouterView /></main>
 </template>
 
 <style lang="scss" scoped>

@@ -38,37 +38,7 @@
       "title": "Secondary Position Role Title",
       "type": "string"
     },
-    "technicalKnowledge": {
-      "type": "array",
-      "title": "Technical Knowledge",
-      "items": {
-        "title": "Knowledge",
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Title",
-            "default": ""
-          },
-          "enhance": {
-            "type": "boolean",
-            "title": "Enhance",
-            "default": false
-          }
-        }
-      }
-    },
-    "roles": {
-      "type": "array",
-      "title": "Roles",
-      "minItems": 0,
-      "maxItems": 5,
-      "items": {
-        "title": "Role title",
-        "type": "string",
-        "err:required": "Role is required"
-      }
-    },
+
     "hashTags": {
       "type": "array",
       "title": "Knowledge Tags",
@@ -103,6 +73,38 @@
             "default": ""
           }
         }
+      }
+    },
+    
+    "technicalKnowledge": {
+      "type": "array",
+      "title": "Technical Knowledge",
+      "items": {
+        "title": "Knowledge",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "enhance": {
+            "type": "boolean",
+            "title": "Enhance",
+            "default": false
+          }
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "title": "Roles",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "title": "Role title",
+        "type": "string",
+        "err:required": "Role is required"
       }
     },
     "workExperience": {

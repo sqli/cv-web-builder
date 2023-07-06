@@ -112,9 +112,13 @@ const print = () => {
 
 const share = () => {
   let formDatatemp = { ...formData.value, readOnly: true }
+  const mypath = router.currentRoute.value.href.substring(
+    0,
+    router.currentRoute.value.href.lastIndexOf('/'),
+  )
   let path =
     window.location.origin +
-    router.currentRoute.value.href +
+    mypath +
     '/' +
     encode(btoa(JSON.stringify(formDatatemp)))
   navigator.clipboard.writeText(path)
@@ -128,13 +132,13 @@ const share = () => {
 const expired = computed(() => {
   const expirationDate = new Date(formData.value.expiresOn)
   const dateToday = new Date()
-  console.log(formData.value)
-  console.log('formData.value.expiresOn', formData.value.expiresOn)
-  console.log('dateToday', dateToday)
-  console.log('expirationDate', expirationDate)
   return (
-    typeof formData.value.expiresOn === 'string' && dateToday < expirationDate
+    typeof formData.value.expiresOn === 'string' && dateToday > expirationDate
   )
+})
+
+const hasParam = computed(() => {
+  return route.params.j
 })
 </script>
 
@@ -162,15 +166,9 @@ const expired = computed(() => {
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-button type="info" @click="share">Share page</el-button>
-          <!--
-            <el-button type="success" @click="loadCVInCookies"
-            >load page</el-button
+          <el-button type="info" @click="share" v-if="hasParam"
+            >Share page</el-button
           >
-          <el-button type="success" @click="saveCVInCookies"
-            >save page</el-button
-          >
-          -->
           <el-button v-if="store.settings.exportPdf" @click="print"
             >Export to PDF</el-button
           >
@@ -184,9 +182,8 @@ const expired = computed(() => {
   <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
     <form-schema></form-schema>
   </el-drawer>
-  {{ formData.readOnly }}
-  {{ expired }}
   <main v-if="!(formData.readOnly && expired)"><RouterView /></main>
+  <main class="expired" v-else><p>This document has expired</p></main>
 </template>
 
 <style lang="scss" scoped>
@@ -220,5 +217,11 @@ const expired = computed(() => {
 }
 main {
   min-height: 100vh;
+}
+.expired {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
 }
 </style>

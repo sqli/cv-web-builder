@@ -19,7 +19,6 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 </script>
 
 <template>
-  <pre>{{ formData }}</pre>
   <article class="page-container">
     <div class="page">
       <div class="page-content">

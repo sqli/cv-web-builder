@@ -9,7 +9,7 @@
       "title": "Anonymous"
     },     
     "expiresOn": {
-      "title": "datepicor",
+      "title": "expires on",
       "type": "string",
       "format": "date"
     },

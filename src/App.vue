@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { encode } from 'url-safe-base64'
@@ -112,9 +112,13 @@ const print = () => {
 
 const share = () => {
   let formDatatemp = { ...formData.value, readOnly: true }
+  const mypath = router.currentRoute.value.href.substring(
+    0,
+    router.currentRoute.value.href.lastIndexOf('/'),
+  )
   let path =
     window.location.origin +
-    router.currentRoute.value.href +
+    mypath +
     '/' +
     encode(btoa(JSON.stringify(formDatatemp)))
   navigator.clipboard.writeText(path)
@@ -125,54 +129,17 @@ const share = () => {
     ]),
   })
 }
+const expired = computed(() => {
+  const expirationDate = new Date(formData.value.expiresOn)
+  const dateToday = new Date()
+  return (
+    typeof formData.value.expiresOn === 'string' && dateToday > expirationDate
+  )
+})
 
-const loadCVInCookies = () => {
-  if (getCookie('CV') === '') {
-    ElMessage.error('CV not found')
-    return
-  }
-  const jsonSchema = JSON.parse(atob(decode(getCookie('CV'))))
-  store.updateData(jsonSchema)
-}
-
-const saveCVInCookies = () => {
-  ElMessageBox.confirm(
-    'Save is going to overwrite the last CV. Save anyway?',
-    'Warning',
-    {
-      confirmButtonText: 'Save',
-      cancelButtonText: 'Cancel',
-    },
-  ).then(() => {
-    ElMessage({
-      type: 'success',
-      message: 'completed',
-    })
-    setCookie('CV', encode(btoa(JSON.stringify(formData.value))), 365)
-  })
-}
-
-function setCookie(cname: string, cvalue: string, exdays: number) {
-  const d = new Date()
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000)
-  let expires = 'expires=' + d.toUTCString()
-  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/'
-}
-function getCookie(cname: string) {
-  let name = cname + '='
-  let decodedCookie = decodeURIComponent(document.cookie)
-  let ca = decodedCookie.split(';')
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i]
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1)
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length)
-    }
-  }
-  return ''
-}
+const hasParam = computed(() => {
+  return route.params.j
+})
 </script>
 
 <template>
@@ -199,15 +166,9 @@ function getCookie(cname: string) {
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-button type="info" @click="share">Share page</el-button>
-          <!--
-            <el-button type="success" @click="loadCVInCookies"
-            >load page</el-button
+          <el-button type="info" @click="share" v-if="hasParam"
+            >Share page</el-button
           >
-          <el-button type="success" @click="saveCVInCookies"
-            >save page</el-button
-          >
-          -->
           <el-button v-if="store.settings.exportPdf" @click="print"
             >Export to PDF</el-button
           >
@@ -218,11 +179,11 @@ function getCookie(cname: string) {
       </div>
     </div>
   </el-affix>
-
   <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
     <form-schema></form-schema>
   </el-drawer>
-  <main><RouterView /></main>
+  <main v-if="!(formData.readOnly && expired)"><RouterView /></main>
+  <main class="expired" v-else><p>This document has expired</p></main>
 </template>
 
 <style lang="scss" scoped>
@@ -256,5 +217,11 @@ function getCookie(cname: string) {
 }
 main {
   min-height: 100vh;
+}
+.expired {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
 }
 </style>

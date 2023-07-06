@@ -54,6 +54,7 @@ const compressImage = async (qualityImage) => {
     )
     const imageCompressed = canvas.toDataURL('image/webp', qualityImage)
     return await new Promise((resolve) => {
+      //console.log(encode(btoa(imageCompressed)).length)
       if (encode(btoa(imageCompressed)).length < props.characterLimit) {
         emit('update:modelValue', imageCompressed)
         compressingImage.value = false

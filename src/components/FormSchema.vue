@@ -30,9 +30,9 @@ const SaveUrlForm = async () => {
   let formToBeSaved = Object.assign({}, formData.value)
 
   if (formToBeSaved.anonymous) {
-    formToBeSaved.firstName = ''
-    formToBeSaved.lastName = ''
-    formToBeSaved.imageProfile = ''
+    store.settings.anonymized.forEach((element) => {
+      formToBeSaved[element] = null
+    })
   }
 
   if (formToBeSaved) {

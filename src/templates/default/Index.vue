@@ -10,7 +10,11 @@ import { decode } from 'url-safe-base64'
 
 const store = useSchema()
 store.updateSchema(schema)
-store.upddateSettings({ exportPdf: true, imageUpload: true })
+store.upddateSettings({
+  exportPdf: true,
+  imageUpload: true,
+  anonymized: ['firstName', 'lastName', 'imageProfile'],
+})
 
 const { formData } = storeToRefs(store)
 
@@ -72,7 +76,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
           </section>
         </div>
         <aside>
-          <picture v-if="formData.imageProfile">
+          <picture v-if="formData.imageProfile && !formData.anonymous">
             <img :src="formData.imageProfile" />
           </picture>
           <section>

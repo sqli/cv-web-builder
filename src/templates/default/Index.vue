@@ -27,6 +27,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
     <div class="page">
       <div class="page-content">
         <div class="content">
+          <span v-if="formData.id" class="id">{{ formData.id }}</span>
           <div class="head">
             <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
             <inline-svg :width="300" :src="imgLogo" class="img-logo" />
@@ -176,6 +177,12 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
         .content {
           width: 100%;
         }
+      }
+      .id {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+        color: var(--el-text-color-secondary);
       }
       aside {
         background-color: var(--color-aside-bg);

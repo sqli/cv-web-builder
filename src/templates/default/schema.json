@@ -2,12 +2,20 @@
   "type": "object",
   "title": "Personal Data",
   "description": "Please, add your data",
-  "ui:order": ["expiresOn","anonymous", "imageProfile", "firstName", "LastName", "*"],
+  "ui:order": [
+    "id",
+    "expiresOn",
+    "anonymous",
+    "imageProfile",
+    "firstName",
+    "lastName",
+    "*"
+  ],
   "properties": {
     "anonymous": {
       "type": "boolean",
       "title": "Anonymous"
-    },     
+    },
     "expiresOn": {
       "title": "expires on",
       "type": "string",
@@ -24,6 +32,11 @@
         "imageWidth": 286,
         "characterLimit": 5000
       }
+    },
+    "id": {
+      "type": "string",
+      "title": "Personal number",
+      "maxLength": 10
     },
     "firstName": {
       "type": "string",
@@ -57,7 +70,7 @@
         }
       }
     },
-    
+
     "certificationsAwards": {
       "type": "array",
       "title": "Certifications / Awards",
@@ -80,7 +93,7 @@
         }
       }
     },
-    
+
     "technicalKnowledge": {
       "type": "array",
       "title": "Technical Knowledge",

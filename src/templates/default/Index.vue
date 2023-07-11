@@ -6,10 +6,16 @@ import { useRoute } from 'vue-router'
 import InlineSvg from '../../components/InlineSvg.vue'
 import schema from './schema.json'
 import { encode } from 'url-safe-base64'
+import { JSDOM } from 'jsdom'
+import DOMPurify from 'dompurify'
 
 const store = useSchema()
 const router = useRouter()
 const route = useRoute()
+const purify = DOMPurify(window)
+const clean = (unsafeHtml) => {
+  return purify.sanitize(unsafeHtml)
+}
 
 store.updateSchema(schema)
 store.save = () => {
@@ -43,6 +49,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 </script>
 
 <template>
+  <pre>{{ formData }}</pre>
   <article class="page-container">
     <div class="page">
       <div class="page-content">
@@ -91,7 +98,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               >
                 <strong>{{ exp.timePeriod }}</strong>
                 <span>{{ exp.position }}</span>
-                <p>{{ exp.description }}</p>
+                <div v-html="clean(exp.description)" />
               </li>
             </ul>
           </section>
@@ -144,7 +151,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               >
                 <strong>{{ exp.timePeriod }}</strong>
                 <span>{{ exp.position }}</span>
-                <p>{{ exp.description }}</p>
+                <div v-html="clean(exp.description)" />
               </li>
             </ul>
           </section>

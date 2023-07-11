@@ -155,6 +155,7 @@
                 "type": "string",
                 "title": "Description",
                 "default": "",
+                "ui:widget": "QuillEditor",
                 "ui:options": {
                   "type": "textarea",
                   "rows": 6

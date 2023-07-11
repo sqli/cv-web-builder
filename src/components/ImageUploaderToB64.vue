@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
-import { useSchema } from '../../stores/schema'
+import { useSchema } from '../stores/schema'
 import { ElMessage } from 'element-plus'
 import { encode } from 'url-safe-base64'
 

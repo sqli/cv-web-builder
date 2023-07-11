@@ -9,6 +9,9 @@ export const useSchema = defineStore('schema', {
     settings: ref({} as Settings),
   }),
   actions: {
+    save() {
+
+    },
     updateImage(base64Img: string) {
       this.formData.imageProfile = base64Img
     },

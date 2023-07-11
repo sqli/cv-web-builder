@@ -59,9 +59,7 @@ const handleCommand = (command: string) => {
 }
 
 const print = () => {
-  const filename = 'Resume.pdf'
-  const a4Width = 210 // paper Standard Width
-  const a4Height = 297 // paper Standard Height
+  const filename = `${formData.value.id || 'document'}.pdf`
   const paper = <HTMLScriptElement>document.querySelector('.page')
 
   const loading = ElLoading.service({
@@ -103,7 +101,7 @@ const print = () => {
         )
         heightLeft -= pageHeight
       }
-      doc.save('Downld.pdf')
+      doc.save(filename)
       container.classList.remove('html2canvas')
       loading.close()
     })

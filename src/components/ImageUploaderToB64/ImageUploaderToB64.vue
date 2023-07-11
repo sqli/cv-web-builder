@@ -30,7 +30,7 @@ const change = ({ canvas }) => {
   croppedImage.value = canvas
 }
 const finalizar = () => {
-  compressImage(0.7)
+  compressImage(0.2)
 }
 const compressImage = async (qualityImage) => {
   compressingImage.value = true
@@ -54,6 +54,7 @@ const compressImage = async (qualityImage) => {
     )
     const imageCompressed = canvas.toDataURL('image/webp', qualityImage)
     return await new Promise((resolve) => {
+      //console.log(encode(btoa(imageCompressed)).length)
       if (encode(btoa(imageCompressed)).length < props.characterLimit) {
         emit('update:modelValue', imageCompressed)
         compressingImage.value = false
@@ -71,6 +72,11 @@ const compressImage = async (qualityImage) => {
     })
   }
 }
+
+const clearImage = () => {
+  uploadedImage.value = ''
+  emit('update:modelValue', '')
+}
 </script>
 
 <template>
@@ -81,9 +87,7 @@ const compressImage = async (qualityImage) => {
       class="upload-demo"
     >
       <el-button type="primary">Click to upload</el-button>
-      <el-button type="primary" @click.stop="uploadedImage = ''"
-        >clear</el-button
-      >
+      <el-button @click.stop="clearImage">Clear image</el-button>
     </el-upload>
     <cropper
       class="upload-example-cropper"
@@ -101,7 +105,9 @@ const compressImage = async (qualityImage) => {
       image-restriction="stencil"
       @change="change"
     />
-    <el-button v-if="uploadedImage" @click="finalizar"> Crop image</el-button>
+    <el-button v-if="uploadedImage" type="success" @click="finalizar">
+      Crop image</el-button
+    >
   </div>
 </template>
 

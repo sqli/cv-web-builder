@@ -98,7 +98,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               >
                 <strong>{{ exp.timePeriod }}</strong>
                 <span>{{ exp.position }}</span>
-                <p>{{ exp.description }}</p>
+                <div v-html="clean(exp.description)" />
               </li>
             </ul>
           </section>
@@ -151,7 +151,7 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               >
                 <strong>{{ exp.timePeriod }}</strong>
                 <span>{{ exp.position }}</span>
-                <div>{{ clean(exp.description) }}</div>
+                <div v-html="clean(exp.description)" />
               </li>
             </ul>
           </section>

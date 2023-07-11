@@ -81,6 +81,9 @@ const compressImage = async (qualityImage) => {
       class="upload-demo"
     >
       <el-button type="primary">Click to upload</el-button>
+      <el-button type="primary" @click.stop="uploadedImage = ''"
+        >clear</el-button
+      >
     </el-upload>
     <cropper
       class="upload-example-cropper"

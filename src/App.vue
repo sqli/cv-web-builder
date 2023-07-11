@@ -129,6 +129,16 @@ const share = () => {
     ]),
   })
 }
+const saveAndClose = async () => {
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Building PDF',
+    background: 'rgba(255, 255, 255, 1)',
+  })
+  store.save()
+  loading.close()
+  drawer.value = false
+}
 const expired = computed(() => {
   const expirationDate = new Date(formData.value.expiresOn)
   const dateToday = new Date()
@@ -180,6 +190,13 @@ const hasParam = computed(() => {
     </div>
   </el-affix>
   <el-drawer v-model="drawer" direction="rtl" class="form-drawer">
+    <template #header>
+      <div>
+        <el-button type="primary" @click="saveAndClose">
+          Save and close
+        </el-button>
+      </div>
+    </template>
     <form-schema></form-schema>
   </el-drawer>
   <main v-if="!(formData.readOnly && expired)"><RouterView /></main>

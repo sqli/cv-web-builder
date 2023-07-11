@@ -1,16 +1,36 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useSchema } from '../../stores/schema'
+import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import InlineSvg from '../../components/InlineSvg.vue'
 import schema from './schema.json'
-import { useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { decode } from 'url-safe-base64'
+import { encode } from 'url-safe-base64'
 
 const store = useSchema()
+const router = useRouter()
+const route = useRoute()
+
 store.updateSchema(schema)
 store.upddateSettings({ exportPdf: true, imageUpload: true })
+store.save = () => {
+  let formToBeSaved = Object.assign({}, formData.value)
+
+  if (formToBeSaved.anonymous) {
+    formToBeSaved.firstName = ''
+    formToBeSaved.lastName = ''
+    formToBeSaved.imageProfile = ''
+  }
+
+  if (formToBeSaved) {
+    let urlNeedsJName = (route.name as string).slice(-1) !== 'j' ? 'j' : ''
+
+    router.push({
+      name: (route.name as string) + urlNeedsJName,
+      params: { j: `${encode(btoa(JSON.stringify(formToBeSaved)))}` },
+    })
+  }
+}
 
 const { formData } = storeToRefs(store)
 

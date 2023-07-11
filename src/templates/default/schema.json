@@ -52,9 +52,7 @@
       "items": {
         "title": "Tag",
         "type": "string",
-        "message": {
-          "err:required": "Tag name is required"
-        }
+        "err:required": "Tag name is required"
       }
     },
     

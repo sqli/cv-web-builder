@@ -16,9 +16,20 @@ const send = () => {
 onMounted(() => {
   quillEditor.value.setHTML(props.modelValue)
 })
+const toolbarOptions = [
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  ['bold', 'italic', 'underline'], // toggled buttons
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+  [{ align: [] }],
+]
 </script>
 <template>
-  <QuillEditor @update:content="send" ref="quillEditor" toolbar="minimal" />
+  <QuillEditor
+    ref="quillEditor"
+    :toolbar="toolbarOptions"
+    @update:content="send"
+  />
 </template>
 
 <style lang="scss">

@@ -20,7 +20,7 @@ const toolbarOptions = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   ['bold', 'italic', 'underline'], // toggled buttons
   [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+  [{ color: [] }], // dropdown with defaults from theme
   [{ align: [] }],
 ]
 </script>
@@ -38,6 +38,9 @@ const toolbarOptions = [
   .ql-toolbar,
   .ql-container {
     width: 100%;
+  }
+  .ql-container {
+    min-height: 5rem;
   }
 }
 </style>

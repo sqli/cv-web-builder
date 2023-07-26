@@ -108,8 +108,8 @@ const print = () => {
   }
 }
 
-const share = () => {
-  let formDatatemp = { ...formData.value, readOnly: true }
+const share = (isReadOnly) => {
+  let formDatatemp = { ...formData.value, readOnly: isReadOnly }
   const mypath = router.currentRoute.value.href.substring(
     0,
     router.currentRoute.value.href.lastIndexOf('/'),
@@ -122,7 +122,13 @@ const share = () => {
   navigator.clipboard.writeText(path)
   ElMessage({
     message: h('p', null, [
-      h('span', null, 'The read only share link is now '),
+      h('span', null, 'The '),
+      h(
+        'span',
+        { style: 'font-weight:bold' },
+        isReadOnly ? 'read only ' : 'editable',
+      ),
+      h('span', null, ' share link is now '),
       h('span', { style: 'color: teal' }, 'copied to the clipboard'),
     ]),
   })
@@ -174,8 +180,11 @@ const hasParam = computed(() => {
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-button type="info" @click="share" v-if="hasParam"
-            >Share page</el-button
+          <el-button type="info" @click="share(true)" v-if="hasParam"
+            >Share Read-Only page
+          </el-button>
+          <el-button type="info" @click="share(false)" v-if="hasParam"
+            >Share Editable Page</el-button
           >
           <el-button v-if="store.settings.exportPdf && hasParam" @click="print"
             >Export to PDF</el-button

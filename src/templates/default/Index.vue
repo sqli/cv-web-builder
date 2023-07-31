@@ -8,6 +8,7 @@ import schema from './schema.json'
 import { encode } from 'url-safe-base64'
 import { JSDOM } from 'jsdom'
 import DOMPurify from 'dompurify'
+import countriesList from '../../components/FlagSelector/countries/countriesList.json'
 
 const store = useSchema()
 const router = useRouter()
@@ -110,6 +111,17 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
             <strong v-if="!formData.anonymous"
               >{{ formData.firstName }} {{ formData.lastName }}</strong
             >
+
+            <ul v-if="formData.languages" class="locales">
+              <li v-for="key in formData.languages" :key="key">
+                <!-- img :src="`/src/assets/flags/.png`"  /-->
+                <img
+                  :src="`https://www.unknown.nu/flags/images/${key}-100`"
+                  :alt="countriesList[key].name"
+                  :title="countriesList[key].name"
+                />
+              </li>
+            </ul>
             <p>{{ formData.mainPositionRole }}</p>
             <p>{{ formData.secondaryPositionRole }}</p>
             <ul class="tags">
@@ -257,6 +269,13 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
                 font-size: 1rem;
                 margin-bottom: 1rem;
               }
+            }
+          }
+          .locales {
+            display: flex;
+            gap: 4px;
+            img {
+              width: 24px;
             }
           }
         }

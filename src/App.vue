@@ -9,6 +9,7 @@ import { h } from 'vue'
 import { decode } from 'url-safe-base64'
 
 import FormSchema from './components/FormSchema.vue'
+import flagSelector from './components/FlagSelector/FlagSelector.vue'
 import { useSchema } from './stores/schema'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
@@ -166,6 +167,9 @@ const hasParam = computed(() => {
           </div>
         </div>
       </div>
+      <!--pre>
+         {{ formData }}
+      </pre-->
       <div class="el-page-header__extra">
         <div class="flex items-center">
           <el-dropdown class="template-selector" @command="handleCommand">

@@ -10,6 +10,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import QuillEditor from './components/QuillEditor.vue'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
+import FlagSelector from './components/FlagSelector/FlagSelector.vue'
+
 import './assets/main.scss'
 
 import App from './App.vue'
@@ -22,6 +24,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.component('ImageUploaderToB64', ImageUploaderToB64)
 app.component('QuillEditor', QuillEditor)
+app.component('FlagSelector', FlagSelector)
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus)

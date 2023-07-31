@@ -112,6 +112,13 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               >{{ formData.firstName }} {{ formData.lastName }}</strong
             >
 
+            <img :src="`@/src/assets/flags/es-100.png`" />
+            <img :src="`./src/assets/flags/es-100.png`" />
+            <img :src="`@/assets/flags/es-100.png`" />
+            <img :src="`./assets/flags/es-100.png`" />
+            <img :src="`/assets/flags/es-100.png`" />
+            <img :src="`/src/assets/flags/es-100.png`" />
+
             <ul v-if="formData.languages" class="locales">
               <li v-for="key in formData.languages" :key="key">
                 <img

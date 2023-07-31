@@ -47,6 +47,9 @@ const { formData } = storeToRefs(store)
 
 const bgLogo = new URL('./backgroundLogo.svg', import.meta.url).href
 const imgLogo = new URL('./logo.svg', import.meta.url).href
+const getImageUrl = (key) => {
+  return new URL(`../../assets/flags/${key}-100.png`, import.meta.url).href
+}
 </script>
 
 <template>
@@ -112,19 +115,10 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
               >{{ formData.firstName }} {{ formData.lastName }}</strong
             >
 
-            <img :src="`@/src/assets/flags/es-100.png`" />
-            <img :src="`./src/assets/flags/es-100.png`" />
-            <img :src="`@/assets/flags/es-100.png`" />
-            <img :src="`./assets/flags/es-100.png`" />
-            <img :src="`/assets/flags/es-100.png`" />
-            <img :src="`/src/assets/flags/es-100.png`" />
-            <img :src="`~/assets/flags/es-100.png`" />
-            <img :src="`~/src/assets/flags/es-100.png`" />
-
             <ul v-if="formData.languages" class="locales">
               <li v-for="key in formData.languages" :key="key">
                 <img
-                  :src="`/src/assets/flags/${key}-100.png`"
+                  :src="getImageUrl(key)"
                   :alt="countriesList[key].name"
                   :title="countriesList[key].name"
                 />

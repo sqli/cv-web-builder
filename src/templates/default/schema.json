@@ -48,6 +48,15 @@
       "title": "Last name",
       "ui:hidden": "{{rootFormData.anonymous === true}}"
     },
+    "languages": {
+      "type": "array",
+      "title": "Languages",
+      "ui:widget": "FlagSelector",
+      "items": {
+          "type": "string"
+        },
+      "uniqueItems": true
+    },
     "mainPositionRole": {
       "type": "string",
       "title": "Main Role Position Title"

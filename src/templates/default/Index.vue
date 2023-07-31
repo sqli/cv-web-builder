@@ -114,9 +114,8 @@ const imgLogo = new URL('./logo.svg', import.meta.url).href
 
             <ul v-if="formData.languages" class="locales">
               <li v-for="key in formData.languages" :key="key">
-                <!-- img :src="`/src/assets/flags/.png`"  /-->
                 <img
-                  :src="`https://www.unknown.nu/flags/images/${key}-100`"
+                  :src="`/src/assets/flags/${key}-100.png`"
                   :alt="countriesList[key].name"
                   :title="countriesList[key].name"
                 />

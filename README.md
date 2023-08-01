@@ -2,7 +2,7 @@
 
 # cv-web-builder
 
-This template should help get you started developing with Vue 3 in Vite.
+CV Web Builder will allow you to create a SQLI CV only using your browser. The CV data is not stored in any backend server, it's encoded in the url, so you have all the control on your data and who you share your cv.
 
 ## Recommended IDE Setup
 

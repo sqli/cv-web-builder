@@ -4,6 +4,8 @@
 
 CV Web Builder will allow you to create a SQLI CV only using your browser. The CV data is not stored in any backend server, it's encoded in the url, so you have all the control on your data and who you share your cv.
 
+[Use this link to create your CV](https://sqli.github.io/cv-web-builder/default)
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).

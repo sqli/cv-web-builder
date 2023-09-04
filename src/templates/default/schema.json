@@ -65,7 +65,6 @@
       "title": "Secondary Position Role Title",
       "type": "string"
     },
-
     "hashTags": {
       "type": "array",
       "title": "Knowledge Tags",
@@ -100,7 +99,10 @@
         }
       }
     },
-
+    "summary": {
+      "title": "Summary",
+      "type": "string"
+    },
     "technicalKnowledge": {
       "type": "array",
       "title": "Technical Knowledge",

@@ -16,12 +16,12 @@ export const useSchema = defineStore('schema', {
       this.formData.imageProfile = base64Img
     },
     updateData(data: any) {
-      this.formData = data
+      this.formData = Object.assign({}, this.formData,data);
     },
     updateSchema(schema: any) {
       this.formSchema = schema
     },
-    upddateSettings(settings: Settings) {
+    updateSettings(settings: Settings) {
       this.settings = settings
     },
   },

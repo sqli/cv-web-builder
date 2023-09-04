@@ -37,12 +37,11 @@ store.save = () => {
     })
   }
 }
-store.upddateSettings({
+store.updateSettings({
   exportPdf: true,
   imageUpload: true,
   anonymized: ['firstName', 'lastName', 'imageProfile'],
 })
-
 const { formData } = storeToRefs(store)
 
 const bgLogo = new URL('./backgroundLogo.svg', import.meta.url).href
@@ -62,6 +61,9 @@ const getImageUrl = (key) => {
             <inline-svg :width="300" :src="bgLogo" class="bg-logo" />
             <inline-svg :width="300" :src="imgLogo" class="img-logo" />
           </div>
+          <section v-if="formData.summary" class="summary">
+            <p>{{ formData.summary }}</p>
+          </section>
           <section v-if="formData.technicalKnowledge?.length" class="tech">
             <h2>TECHNICAL KNOWLEDGE</h2>
             <ul>
@@ -118,6 +120,7 @@ const getImageUrl = (key) => {
             <ul v-if="formData.languages" class="locales">
               <li v-for="key in formData.languages" :key="key">
                 <img
+                  v-if="countriesList[key]"
                   :src="getImageUrl(key)"
                   :alt="countriesList[key].name"
                   :title="countriesList[key].name"
@@ -346,6 +349,11 @@ const getImageUrl = (key) => {
           }
           &.roles {
             color: var(--color-primary-500);
+          }
+          &.summary {
+            margin: 0 1rem 1rem;
+            font-size: 1rem;
+            color: var(--color-secondary-700);
           }
           &.experience {
             ul {

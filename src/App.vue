@@ -10,6 +10,7 @@ import { decode } from 'url-safe-base64'
 
 import FormSchema from './components/FormSchema.vue'
 import flagSelector from './components/FlagSelector/FlagSelector.vue'
+import ImportFromLinkedin from './components/ImportFromLinkedin.vue'
 import { useSchema } from './stores/schema'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
@@ -104,6 +105,7 @@ const print = () => {
       }
       doc.save(filename)
       container.classList.remove('html2canvas')
+      console.log(paper)
       loading.close()
     })
   }
@@ -206,6 +208,7 @@ const hasParam = computed(() => {
         <el-button type="primary" @click="saveAndClose">
           Save and close
         </el-button>
+        <ImportFromLinkedin />
       </div>
     </template>
     <form-schema></form-schema>
@@ -251,5 +254,9 @@ main {
   justify-content: center;
   align-items: center;
   font-size: 2.5rem;
+}
+.summary {
+  margin: 0 1rem 1rem;
+  font-size: 1rem;
 }
 </style>

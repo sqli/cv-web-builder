@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: pandoc/latex
+    #container: ubuntu    
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: 'src/'
+          destination-github-username: 'Jo3l'
+          destination-repository-name: 'cv-web-builder'
+          user-email: jjc.gp12@gmail.com
+          commit-message: "updated from sqli develop branch"
+          target-branch: develop
+          target-directory: src

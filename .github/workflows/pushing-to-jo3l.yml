@@ -1,4 +1,4 @@
-name: CI
+name: push to jo3l repository
 on:
   push:
     branches: [ develop ]

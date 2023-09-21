@@ -1,11 +1,7 @@
 name: CI
-
 on:
   push:
     branches: [ develop ]
-  pull_request:
-    branches: [ develop ]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,5 +19,5 @@ jobs:
           destination-repository-name: 'cv-web-builder'
           user-email: jjc.gp12@gmail.com
           commit-message: "updated from sqli develop branch"
-          target-branch: develop
+          target-branch: main
           target-directory: src

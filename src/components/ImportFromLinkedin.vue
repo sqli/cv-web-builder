@@ -1,48 +1,3 @@
-<template>
-  <el-button @click="visible = true"> Import from Linkedin </el-button>
-  <el-dialog v-model="visible" :show-close="true" center>
-    <template #header>
-      <div class="linkedin-modal-header">
-        <h4>Import from Linkeding</h4>
-      </div>
-    </template>
-
-    <ol>
-      <li>
-        <a
-          href="https://www.linkedin.com/mypreferences/d/download-my-data"
-          target="_blank"
-          >click here</a
-        >
-      </li>
-      <li>login with your credentials</li>
-      <li>select the first option</li>
-      <li>click on request file</li>
-      <li>
-        Wait for the email in your inbox (it can takes more than 10 minutes)
-      </li>
-      <li>click and download the file</li>
-      <li>use the button below to upload the zip file</li>
-      <li>check that everything has been uploaded correctly</li>
-    </ol>
-
-    <el-upload
-      class="linkedin-upload"
-      :on-change="handleFileChange"
-      :before-upload="readCSVFiles"
-      :show-file-list="false"
-    >
-      <el-button type="primary">Click to upload</el-button>
-    </el-upload>
-    <el-alert
-      v-if="zipRead === 'error'"
-      title="Something went wrong"
-      type="error"
-      show-icon
-    />
-  </el-dialog>
-</template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import JSZip from 'jszip'
@@ -58,7 +13,7 @@ const zipRead = ref('')
 const zipFile = ref(null)
 const csvData = ref(null)
 
-const visible = ref(false)
+const modalLinkedinVisible = ref(false)
 const handleFileChange = (event) => {
   zipFile.value = event.raw
   return false
@@ -103,7 +58,7 @@ const readCSVFiles = async () => {
 
     csvData.value = results
     saveDataInStore()
-    visible.value = false
+    modalLinkedinVisible.value = false
     ElMessage({
       showClose: true,
       message: h('p', null, [
@@ -196,7 +151,52 @@ function formatWorkExperience() {
   }
 }
 </script>
+<template>
+  <el-button @click="modalLinkedinVisible = true">
+    Import from Linkedin
+  </el-button>
+  <el-dialog v-model="modalLinkedinVisible" :show-close="true" center>
+    <template #header>
+      <div class="linkedin-modal-header">
+        <h4>Import from Linkeding</h4>
+      </div>
+    </template>
 
+    <ol>
+      <li>
+        <a
+          href="https://www.linkedin.com/mypreferences/d/download-my-data"
+          target="_blank"
+          >click here</a
+        >
+      </li>
+      <li>login with your credentials</li>
+      <li>select the first option</li>
+      <li>click on request file</li>
+      <li>
+        Wait for the email in your inbox (it can takes more than 10 minutes)
+      </li>
+      <li>click and download the file</li>
+      <li>use the button below to upload the zip file</li>
+      <li>check that everything has been uploaded correctly</li>
+    </ol>
+
+    <el-upload
+      class="linkedin-upload"
+      :on-change="handleFileChange"
+      :before-upload="readCSVFiles"
+      :show-file-list="false"
+    >
+      <el-button type="primary">Click to upload</el-button>
+    </el-upload>
+    <el-alert
+      v-if="zipRead === 'error'"
+      title="Something went wrong"
+      type="error"
+      show-icon
+    />
+  </el-dialog>
+</template>
 <style scoped lang="scss">
 .el-dialog__header {
   padding-bottom: 0px;
